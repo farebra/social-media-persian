@@ -1,0 +1,249 @@
+﻿
+@inject social.Models.Contextsocial db
+@using social.Models.ViewModel
+
+@{
+    ViewData["Title"] = "اشتراک فایل";
+    Layout = "~/Views/Shared/_Layoutpro2.cshtml";
+
+
+}
+
+<link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+<script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<style>
+    .ui-widget-header {
+        background: #cedc98;
+        border: 1px solid #DDDDDD;
+        color: #333333;
+        font-weight: bold;
+    }
+
+    .progress-label {
+        position: absolute;
+        left: 50%;
+        top: 113px;
+        font-weight: bold;
+        text-shadow: 1px 1px 0 #fff;
+    }
+
+    .red {
+        color: red;
+    }
+</style>
+
+
+<div class="div-search">
+    <lable class="text-search">اشتراک فایل</lable>
+</div>
+
+<div class="callmain">
+
+
+    <div class="calldhl">
+        @*<p class="makeplp">ساخت لینک اشتراک فایل</p>*@
+        <button onclick="linkpeer()" class="btn-lin btn btn-xs btn-sm btn-warning">ایجاد لینک</button>
+        <label class="btnfileu btn btn-info btn-xs btn-sm">
+            اپلود فایل
+            <input name="storyimg" type="file" id="storyimg" class="storyimg" style="visibility:hidden" />
+
+        </label>
+    </div>
+    <div class="callinfo">
+        <p class="infocl">در نظر داشته باشید پس از دریافت لینک , لینک را برای افراد مورد نظر ارسال کنید</p>
+    </div>
+    @*<div class="dlin">
+        <p class="tlincall">کد فایل</p>
+        <button id="FailCopy" type="button" onclick="copyToClipboard('p.linmaster0')" class="btn btn-xs btn-info">کپی</button>
+    </div>*@
+    <div class="dlin2">
+        <p class="tlincall">لبنک فایل</p>
+        <button id="FailCopy2" type="button" onclick="copyToClipboard2('p.linmaster')" class="btn btn-xs btn-info">کپی</button>
+
+    </div>
+    <div class="shup">
+
+
+        <button class="btn-sm btn btn-xs btn-success btn-share btn-lincall">ذخیره فایل</button>
+        <h5 class="h-lincall">فایل با موفقیت ذخیره شد</h5>
+    </div>
+
+
+
+</div>
+
+
+
+<div class="linkdf">
+   
+
+                <p class="makeplp text-success">@ViewBag.namefile</p>
+
+
+                <a class="btn-lin btn btn-sm btn-xs btn-success" href="/media/file/@ViewBag.namefile"><i class="fa fa-download" aria-hidden="true"></i>دانلود</a>
+
+       
+</div>
+<div id="progressbar-5">
+    <div class="progress-label">
+    </div>
+</div>
+<script>
+    $(".btnfileu").click(function () {
+        $(".btn-lin").show();
+
+    })
+
+    if ('@ViewBag.idc' == "true") {
+        $(".callmain").hide();
+        $(".linkdf").show();
+        $(".btn-lin").show();
+        $(".h-lincall").hide();
+
+    }
+    else {
+        $(".btn-lin").hide();
+        $(".callmain").show();
+        $(".linkdf").hide();
+        $(".shup").hide();
+        $(".h-lincall").hide();
+
+    }
+        ///////////////////////////////////////
+    function linkpeer() {
+        $(".shup").show();
+
+            var rand = Math.floor(Math.random() *999999999);
+            $.ajax("/guest/addidfile?code="+rand).done();
+            //$(".dlin").append(
+            //    '<p class="linmaster0">' + rand + '</p>'
+            //);
+            $(".dlin2").append(
+                '<p class="linmaster">www.iranlo.ir/guest/share?idc=' + rand + '</a>'
+            );
+        }
+
+    //////////////////////////////////////////////////////////share file
+    $(".btn-share").click(function () {
+        //$(".div-up-img").hide();
+        //$(".div-up-text").show();
+        var file_data = $("#storyimg").prop("files")[0]; // Getting the properties of file from file field
+        var form_data = new FormData(); // Creating object of FormData class
+        form_data.append("file", file_data); // Appending parameter named file with properties of file_field to form_data
+        $.ajax({
+            url: "/guest/shareadd", // Upload Script
+            dataType: 'script',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form_data, // Setting the data attribute of ajax with file_data
+            type: 'post',
+            success: function (data) {
+                //var json = JSON.parse(data);
+                LoadProgressBar(data);
+                //pic = json["voicename"];
+    }
+
+    })
+ })
+    /////////////////////////////progressbar
+    function LoadProgressBar(result) {
+        var progressbar = $("#progressbar-5");
+        var progressLabel = $(".progress-label");
+        progressbar.show();
+        $("#progressbar-5").progressbar({
+            //value: false,
+            change: function () {
+                progressLabel.text(
+                    progressbar.progressbar("value") + "%");  // Showing the progress increment value in progress bar
+            },
+            complete: function () {
+                progressLabel.text("Loading Completed!");
+                progressbar.progressbar("value", 0);  //Reinitialize the progress bar value 0
+                progressLabel.text("");
+                progressbar.hide(); //Hiding the progress bar
+                var markup = "<tr><td>" + result + "</td><td><a href='#' onclick='DeleteFile(\"" + result + "\")'><span class='glyphicon glyphicon-remove red'></span></a></td></tr>"; // Binding the file name
+                $("#ListofFiles tbody").append(markup);
+                $('#storyimg').val('');
+                //$('#FileBrowse').find("*").prop("disabled", false);
+            }
+        });
+        function progress() {
+            var val = progressbar.progressbar("value") || 0;
+            progressbar.progressbar("value", val + 1);
+            if (val < 99) {
+                setTimeout(progress, 25);
+            }
+        }
+        setTimeout(progress, 100);
+    }
+   
+
+    //function copyToClipboard(element) {
+    //    var $temp = $("<input>");
+    //    $("body").append($temp);
+    //    $temp.val($(element).text()).select();
+    //    document.execCommand("copy");
+    //    $temp.remove();
+    //}
+
+    //$("#FailCopy").click(function () {
+    //    $("#FailCopy").style.background = "green";
+    //});
+    function copyToClipboard2(element) {
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val($(element).text()).select();
+        document.execCommand("copy");
+        $temp.remove();
+    }
+
+    $("#FailCopy2").click(function () {
+        $("#FailCopy2").style.background = "green";
+    });
+
+    $(".btn-lincall").click(function () {
+        //var url = "https://localhost:44351/guest/share?pic=" + pic;
+        //$(location).attr('href', url);
+        $(".h-lincall").show();
+    })
+    ////////////////////////////////////////////////////////
+
+
+
+
+
+
+    $(".profile-li").css({ 'background': '#bd9119', 'color': 'white' });
+    $(".inboxmenu").css({ 'background': 'white', 'border': '2px solid #0751a1', 'color': '#0751a1', 'padding': '5px 8px 1px 5px' });
+    $(".inboxmenu2").css({ 'background': 'white', 'color': '#0751a1' });
+    //#0751a1
+</script>
+
+@section Scripts{
+    <script>
+
+
+
+        $(".profile-li").css({ 'background': '#bd9119', 'color': 'white' });
+        $(".inboxmenu").css({ 'background': 'white', 'border': '2px solid #0751a1', 'color': '#0751a1', 'padding': '5px 8px 1px 5px' });
+        $(".inboxmenu2").css({ 'background': 'white', 'color': '#0751a1' });
+                                                                                //#0751a1
+    </script>
+
+
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+
+
+
+    <link href="~/css/all.css" rel="stylesheet" />
+    <link href="~/css/fontawesome.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+
+    <script src="~/js/all.js"></script>
+    <script src="~/js/fontawesome.js"></script>
+
+
+
+}

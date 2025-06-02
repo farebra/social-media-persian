@@ -1,0 +1,61 @@
+﻿
+@{
+    ViewData["Title"] = "Ignore";
+    Layout = "~/Views/Shared/_Layoutpro.cshtml";
+}
+
+
+
+
+<div class="div-search">
+    <labe class="text-search2">بلوک</labe>
+</div>
+
+<div class="search-div-main">
+    
+      
+    
+  
+</div>
+<script>
+
+
+    $(documnet).ready(function () {
+        $.ajax('/home/ignoreview')
+            .done(function(d){
+                for(var i = 0; i<= d.length; i++)
+    {
+                    $(".search-div-main").append(
+                        '<div class="search-div">'
+                        + '<img class="search-pic rounded-circle" src ="~/picture/profile/' + d[i].picture + '" alt = "عکس پروفایل" />'
+            + '<p class="search-name" >' + d[i].username + '</p>'
+            + '<a onclick="ignore(\'' + d[i].username + '\')" class= "search-p-ignore"> حذف </a>'
+
+        )
+    }
+                                    })
+
+                                })
+    function ignore(user) {
+        $.ajax('home/ignorejson?username=' + user).done(function(d){
+            if (d.state = "true") {
+                //var url = "https://iranlo.ir/home/ignore";
+                //$(location).attr('href', url);
+                $(".search-div-main").html('');
+
+            }
+        });
+
+    }
+    </script>
+@section Scripts{
+    <script>
+
+
+      
+        $(".linkmenu").css({ 'background': 'white', 'border': '2px solid #0751a1', 'color': '#0751a1', 'padding': '5px 8px 1px 5px' });
+        $(".profile-li").css({ 'background': '#bd9119', 'color': 'white' });
+
+    </script>
+
+}

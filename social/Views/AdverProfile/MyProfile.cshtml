@@ -1,0 +1,173 @@
+﻿
+@{
+    ViewData["Title"] = "MyProfile";
+    Layout = "~/Views/Shared/_LayoutAdverProfile.cshtml";
+}
+
+<section id="main" class="clearfix  ad-profile-page">
+    <div class="container">
+
+        <div class="breadcrumb-section">
+            <!-- breadcrumb -->
+            <ol class="breadcrumb">
+                <li><a href="index.html">خانه</a></li>
+                <li>افزودن آگهی</li>
+            </ol><!-- breadcrumb -->
+            <h2 class="title">پروفایل من</h2>
+        </div><!-- banner -->
+
+        <div class="ad-profile section">
+            <div class="user-profile">
+                <div class="user-images">
+                    <img src="images/user.jpg" alt="User Images" class="img-fluid">
+                </div>
+                <div class="user">
+                    <h2>سلام, <a href="#">ایمان عزیز</a></h2>
+                    <h5>آخرین ورود شما سه‌شنبه ، 21 اردیبهشت 1399</h5>
+                </div>
+
+                <div class="favorites-user">
+                    <div class="my-ads">
+                        <a href="my-ads.html">23<small>آگهی‌های من</small></a>
+                    </div>
+                    <div class="favorites">
+                        <a href="#">18<small>علاقه‌مندیها</small></a>
+                    </div>
+                </div>
+            </div><!-- user-profile -->
+
+            <ul class="user-menu">
+                <li class="active"><a href="my-profile.html">پروفایل</a></li>
+                <li><a href="my-ads.html">آگهی‌های من</a></li>
+                <li><a href="favourite-ads.html">آگهی‌های محبوب</a></li>
+                <li><a href="archived-ads.html">آگهی‌های آرشیو شده</a></li>
+                <li><a href="pending-ads.html">در انتظار تایید</a></li>
+                <li><a href="delete-account.html">بستن اکانت</a></li>
+            </ul>
+        </div><!-- ad-profile -->
+
+        <div class="profile">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="user-pro-section">
+                        <!-- profile-details -->
+                        <div class="profile-details section">
+                            <h2>جزییات پروفایل</h2>
+                            <!-- form -->
+                            <div class="form-group">
+                                <label>نام کاربری</label>
+                                <input type="text" class="form-control" placeholder="ایمان عزیز">
+                            </div>
+
+                            <div class="form-group">
+                                <label>ایمیل</label>
+                                <input type="email" class="form-control" placeholder="jyuwe@mail.com">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="name-three">موبایل</label>
+                                <input type="text" class="form-control" placeholder="+213 1234 56789">
+                            </div>
+
+                            <div class="form-group">
+                                <label>شهر</label>
+                                <select class="form-control">
+                                    <option value="#">ایران- تهران</option>
+                                    <option value="#">ایران- اراک</option>
+                                    <option value="#">ایران- قم</option>
+                                    <option value="#">ایران- مشهد</option>
+                                    <option value="#">ایران- تبریز</option>
+                                    <option value="#">ایران- شیراز</option>
+                                    <option value="#">ایران- کرمان</option>
+
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>شما به عنوان زیر فعالیت میکنید</label>
+                                <select class="form-control">
+                                    <option value="#">فروشنده</option>
+                                    <option value="#">شخص</option>
+                                </select>
+                            </div>
+                        </div><!-- profile-details -->
+                        <!-- change-password -->
+                        <div class="change-password section">
+                            <h2>تغییر رمزعبور</h2>
+                            <!-- form -->
+                            <div class="form-group">
+                                <label>رمزعبور قبلی</label>
+                                <input type="password" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label>رمزعبور جدید</label>
+                                <input type="password" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label>تکرار رمزعبور</label>
+                                <input type="password" class="form-control">
+                            </div>
+                        </div><!-- change-password -->
+                        <!-- preferences-settings -->
+                        <div class="preferences-settings section">
+                            <h2>تنظیمات پیشرفته</h2>
+                            <!-- checkbox -->
+                            <div class="checkbox">
+                                <label><input type="checkbox" name="logged"> غیرفعال کردن نظرات آگهی </label>
+                                <label><input type="checkbox" name="receive">اشتراک در خبرنامه</label>
+                                <label><input type="checkbox" name="want">دریافت مشاوره برای خرید و فروش</label>
+                            </div><!-- checkbox -->
+                        </div><!-- preferences-settings -->
+
+                        <a href="#" class="btn">به روز رسانی پروفایل</a>
+                        <a href="#" class="btn cancle">انصراف</a>
+                    </div><!-- user-pro-edit -->
+                </div><!-- profile -->
+
+                <div class="col-md-4 text-center">
+                    <div class="recommended-cta">
+                        <div class="cta">
+                            <!-- single-cta -->
+                            <div class="single-cta">
+                                <!-- cta-icon -->
+                                <div class="cta-icon icon-secure">
+                                    <img src="images/icon/13.png" alt="Icon" class="img-fluid">
+                                </div><!-- cta-icon -->
+
+                                <h4>خرید و فروش امن</h4>
+                                <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است</p>
+                            </div><!-- single-cta -->
+                            <!-- single-cta -->
+                            <div class="single-cta">
+                                <!-- cta-icon -->
+                                <div class="cta-icon icon-support">
+                                    <img src="images/icon/14.png" alt="Icon" class="img-fluid">
+                                </div><!-- cta-icon -->
+
+                                <h4>پشتیبانی 24/7</h4>
+                                <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است</p>
+                            </div><!-- single-cta -->
+                            <!-- single-cta -->
+                            <div class="single-cta">
+                                <!-- cta-icon -->
+                                <div class="cta-icon icon-trading">
+                                    <img src="images/icon/15.png" alt="Icon" class="img-fluid">
+                                </div><!-- cta-icon -->
+
+                                <h4>خرید و فروش آسان</h4>
+                                <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است</p>
+                            </div><!-- single-cta -->
+                            <!-- single-cta -->
+                            <div class="single-cta">
+                                <h5>کمک نیاز دارید؟</h5>
+                                <p><span>با ما تماس بگیرید</span><a href="tellto:08048100000"> 08048100000</a></p>
+                            </div><!-- single-cta -->
+                        </div>
+                    </div><!-- cta -->
+                </div><!-- recommended-cta-->
+            </div><!-- row -->
+        </div>
+    </div><!-- container -->
+</section><!-- ad-profile-page -->

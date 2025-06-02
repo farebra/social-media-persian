@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewData["Title"] = "تماس با ما";
+    Layout = "~/Views/Shared/_LayoutAc.cshtml";
+}
+<style>
+ 
+</style>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+<form class="form-call" asp-action="callus" asp-controller="guest" method="post">
+    <h3 class="tcall">تماس با ما</h3>
+
+    <input type="email" required class="email" id="email" name="email" placeholder="ایمیل خود را وارد کنید" />
+    <textarea class="msg" req id="msg" name="msg" placeholder="متن خود را وارد کنید"></textarea>
+    <div class="rec">
+        <div id="recaptcha" class="g-recaptcha" data-sitekey="6Lc-Xe4hAAAAAMxL375o6uRIW8_ri9b4X8k0E8yQ" data-callback="verifyCallback"></div>
+    </div>
+    <input type="submit" name="sbtn" class="btn btn-sm btn-xs btn-success sbtn" id="sbtn" value="ارسال" />
+</form>
+<script>
+
+    $(".form-call").submit(function (e) {
+
+        var response = window.grecaptcha.getResponse();
+        //recaptcha failed validation
+        if (response.length == 0) {
+            e.preventDefault();
+            $('#recaptcha-error').show();
+        }
+        //recaptcha passed validation
+        else {
+            $('#recaptcha-error').hide();
+        }
+        if (e.isDefaultPrevented()) {
+            return false;
+        } else {
+            return true;
+        }
+    });
+</script>

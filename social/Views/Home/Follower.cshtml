@@ -1,0 +1,135 @@
+﻿@inject social.Models.Contextsocial db
+
+@{
+    ViewData["Title"] = "Follower";
+    Layout = "~/Views/Shared/_Layoutpro.cshtml";
+}
+
+
+@{
+	var user = db.Accounts.SingleOrDefault(r => r.username==User.Identity.Name);
+
+	var following = db.AccountJoins.Where(w => w.following == true&& w.accountId==user.accountId).Count();
+	var follower = db.AccountJoins.Where(a => a.follower == true && a.accountId == user.accountId).Count();
+	var followingt = db.AccountJoins.Where(w => w.follower == true && (w.accountId2 == user.accountId || w.accountId == user.accountId)).Any();
+
+}
+<style>
+ 
+</style>
+<div class="div-search">
+    <input type="text" class="text-search" placeholder="جستجو دنبال کننده "/>
+    <input type="button" class="btn-search" value="جستجو"/>
+</div>
+<div class="search-div-main">
+     
+</div>
+<script>
+    $("document").ready(function () {
+        if ('@follower' != null) {
+            fwerready();
+        }
+       
+    })
+    ////////////////////////////////search
+
+    //$(".text-search").change(function () {
+    //    var user = $(".text-search").val();
+
+    //    $.ajax('/home/followersearchjson?username=' + user)
+    //        .done(function(d){
+    //            for(var i = 0; i<= d.length; i++)
+    //{
+
+
+    //    $(".search-div-main").append(
+    //        '<div class="search-div" onclick="postf(\'' + d[i].username + '\')">'
+    //        + '<img class="search-pic rounded-circle" src ="/picture/profile/' + d[i].picture + '" alt = "عکس پروفایل" />'
+    //        + '<p class="search-name" >' + d[i].username + '</p>'
+    //        + '<a onclick="follower(\'' + d[i].username + '\')" class= "search-p-follower-no"> لغو پیوند </a>'
+
+    //    )
+    //}
+    //                            })
+
+
+    //                       })
+    //function postf(user) {
+    //    $.post('/home/followersearchjson?username=' + user).done();
+    //}
+    /////////////////////////////onclcik
+    $(".btn-search").click(function () {
+        var user = $(".text-search").val();
+        $(".search-div-main").html('');
+        $.ajax('/home/followersearchjson?username=' + user)
+            .done(function(dd){
+                for(var i = 0; i<= dd.length; i++)
+    {
+                    if (dd.state != "false") {
+        $(".search-div-main").append(
+            '<div class="search-div" onclick="postf(\'' + dd[i].username + '\')">'
+            + '<img class="search-pic rounded-circle" src ="/picture/profile/' + dd[i].picture + '" alt = "عکس پروفایل" />'
+            + '<p class="search-name" >' + dd[i].username + '</p>'
+            + '<a onclick="follower(\'' + dd[i].username + '\')" class= "search-p-follower-no"> حذف </a>'
+            +'</div>'
+        )
+                    }
+    }
+                if (dd.state == "false") {
+                    $(".search-div-main").append(
+                        '<div class="search-div">'
+                        + '<p class="search-name" >کاربر یافت نشد </p>'
+
+                    )
+                }
+                            })
+
+
+                       })
+    //////////////////////////////
+    function fwerready()
+    {
+
+        $.ajax('/home/Followerjson')
+            .done(function(d){
+                for(var i = 0; i<= d.length; i++)
+    {
+
+        $(".search-div-main").append(
+                    '<div class="search-div" onclick="postf(\'' + d[i].username + '\')">'
+                        + '<img class="search-pic rounded-circle" src ="/picture/profile/' + d[i].picture + '" alt = "عکس پروفایل" />'
+            + '<p class="search-name" >' + d[i].username + '</p>'
+            + '<a onclick="nofollower(\'' + d[i].username + '\')" class= "search-p-follower-no"> حذف </a>'
+            +'</div>'
+
+        )
+    }
+                    })
+    }
+
+     function postf(user) {
+        var url = "https://iranlo.ir/home/post?user="+user;
+        $(location).attr('href', url);
+        //$.post('/home/links?username=' + user).done();
+    }
+    function nofollower(user) {
+        $.ajax('home/nofollower?username=' + user+'&state=follower').done(function (d) {
+            if(d.state="true")
+            {
+  var url = "https://iranlo.ir/home/profile";
+            $(location).attr('href', url);
+            }
+          
+        }
+        
+        );
+    }
+</script>
+@section Scripts{
+        <script>
+            
+                $(".linkmenu").css({ 'background': 'white', 'border': '2px solid #0751a1','color':'#0751a1','padding':'5px 8px 1px 5px' });
+                     $(".profile-li").css({'background': '#bd9119' ,'color':'white'});
+        </script>
+
+}

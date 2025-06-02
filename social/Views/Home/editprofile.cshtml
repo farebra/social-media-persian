@@ -1,0 +1,75 @@
+﻿@inject social.Models.Contextsocial db
+@model social.Models.Entity.Account
+
+@{
+    ViewData["Title"] = "editprofile";
+    Layout = "~/Views/Shared/_Layoutpro.cshtml";
+    int userid =Convert.ToInt32(ViewBag.userid);
+    var ac = db.Accounts.FirstOrDefault(r => r.accountId == userid);
+}
+
+
+
+
+<div class="regis-div3">
+    <form asp-action="editprofile" asp-controller="home" method="post" enctype="multipart/form-data">
+        <p class="regis-text2">ویرایش پروفایل</p>
+        @if (ac.picturename != null)
+        {
+            <img class="regis-pic" id="regis-pic" src="~/picture/profile/@ac.picturename" />
+        }
+        else
+        {
+            <img class="regis-pic" id="regis-pic" src="~/picture/profile/guest.png" />
+
+        }
+        <label class="lbl-up btn btn-warning">
+           اپلود عکس
+            <input accept="image/*" onchange="loadFile11(event)" name="proimg" type="file" id="proimg" class="regisfile" style="visibility:hidden" />
+
+        </label>
+        @if(ac.email=="")
+        {
+        <input class="regis-email2" asp-for="email" type="email" placeholder="ایمیل" />
+        }
+        else
+        {
+            <input class="regis-email2" asp-for="email" type="email" value="@ac.email" />
+
+        }
+        <input class="regis-user2" asp-for="username" type="text" value="@ac.username" />
+        @if(ac.password=="")
+        {
+            <input class="regis-pass2" asp-for="password" placeholder="کلمه عبور"  />
+
+        }
+        else
+        {
+            <input class="regis-pass2" asp-for="password"  value="@ac.password"/>
+        }
+        <input type="hidden" value="@userid" id="userid" name="userid" />
+
+        <input type="submit" value="ویرایش " class="regis-btn2" />
+    </form>
+</div>
+<script>
+    var loadFile11 = function (event) {
+        var output = document.getElementById('regis-pic');
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function () {
+            URL.revokeObjectURL(output.src) // free memory
+        }
+    };
+    $("#proimg").change(function () {
+        var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
+        if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+            /*  alert("فرمت های قابل استفاده : " + fileExtension.join(', '));*/
+            $(".lbl-up").css({ 'color': 'white', 'background': 'red' });
+            $("#proimg").val('');
+
+        }
+          
+        
+    })
+  
+</script>

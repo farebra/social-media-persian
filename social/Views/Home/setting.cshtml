@@ -1,0 +1,47 @@
+﻿@model social.Models.Entity.Account
+@{
+    ViewData["Title"] = "setting";
+    Layout = "~/Views/Shared/_Layoutpro.cshtml";
+}
+
+<style>
+    .div-main-set{
+        position:absolute;
+        top:220px;
+        right:19%;
+    }
+</style>
+
+<div class="div-search">
+    <labe class="text-search2">تنظیمات</labe>
+</div>
+<div class="div-main-set">
+    @if (Model.activeAll == false)
+    {
+        <p class="p-private text-white">اکانت شخصی  <input type="checkbox" checked="checked" class="chek-private" /></p>
+    }
+    else if (Model.activeAll == true)
+    {
+        <p class="p-private text-white">اکانت شخصی  <input type="checkbox" class="chek-private" /></p>
+
+    }
+    <a href="/home/editprofile" class="edit-profile">ویرایش پروفایل</a>
+</div>
+
+<script>
+    $(".chek-private").change(function () {
+        var check;
+        if ($('.chek-private').is(":checked")) {
+            check = "true";
+        }
+        else{
+            check = "false";
+
+        }
+        $.post('/home/privateac?state=' + check).done();
+    })
+    //$(".edit-profile").click(function () {
+    //    var url = "https:https://iranlo.ir/home/editprofile";
+    //    $(location).attr('href', url);
+    //})
+</script>

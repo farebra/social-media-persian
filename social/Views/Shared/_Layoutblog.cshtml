@@ -1,0 +1,506 @@
+﻿@inject social.Models.Contextsocial db
+<!DOCTYPE html>
+<html lang="enz-index">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - شبکه اجتماعی ایرانلو</title>
+    <meta name="format-detection" content="telephone=no">
+    <meta name="rating" content="adult" />
+    <meta property="og:title" content="شبکه اجتماعی ایرانلو -hrast">
+    <meta name="description" content=" Email : support@iranlo.ir - شبکه اجتماعی , بلاگ , ویدئو کنفرانس , تماس تصویری ,اشتراک فایل ,چت گروهی و -داستان و اشتراک پست ">
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/resolation.css" />
+    <link rel="stylesheet" href="~/social_webapp.styles.css" />
+    <link href="~/css/all.css" rel="stylesheet" />
+    <link href="~/css/fontawesome.css" rel="stylesheet" />
+    <link href="~/css/emojionearea.css" rel="stylesheet" />
+    <style>
+        .bd {
+            background: white;
+        }
+
+        body {
+            min-height: 100vh;
+            min-height: fill-available;
+            min-height: -webkit-fill-available;
+        }
+
+        html {
+            height: fill-available;
+            height: -webkit-fill-available;
+        }
+
+        .div-show {
+            position: fixed;
+            z-index: 10;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: black;
+        }
+
+        video::-webkit-media-controls {
+            display: none;
+        }
+    </style>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/js/all.js"></script>
+    <script src="~/js/fontawesome.js"></script>
+    <script src="~/js/emojionearea.min.js"></script>
+    <script src="https://unpkg.com/peerjs@1.5.1/dist/peerjs.min.js"></script>
+    <script src="http://webrtc.github.io/adapter/adapter-latest.js"></script>
+</head>
+<body style="direction:rtl;" class="bd">
+
+    <div class="main2">
+        <header>
+            <div class="header-main">
+                <p class="logo">hrast</p>
+                <img class="logo-pic" src="~/picture/logo/logo.png" />
+                <ul class="menu">
+                    <li class="profile-li"><a asp-action="profile" asp-controller="home">پروفایل</a></li>
+                    <li class="post-li"><a asp-action="posts" asp-controller="home">پست</a></li>
+                    <li class="group-li"><a asp-action="groups" asp-controller="home">چت گروهی</a></li>
+                    @*<li class="group-li"><a asp-action="stories" asp-controller="home">داستان ها</a></li>*@
+                    @*
+                        <li class="rule-li"><a asp-action="Rules" asp-controller="home">قوانین </a></li>
+
+                        <li class="app-li"><a asp-action="App" asp-controller="home">  اپلیکیشن</a></li>*@
+
+
+                    @*  <li><a asp-action="" asp-controller="">سوالات</a><span class="badge badge-warning">4</span></li>
+                    *@
+
+
+                </ul>
+                <span class="guest"><a class="text-white" asp-action="guestt" asp-controller="guest">مهمان / </a></span>
+
+                <span class="login"><a class="text-white" asp-action="loginn" asp-controller="account">ورود / </a></span>
+                <span class="register"><a class="text-white" asp-action="registerr" asp-controller="account"> عضویت</a></span>
+
+                @*<span class="login"><a asp-action=" " asp-controller="">ورود / </a></span>*@
+
+
+                @*online*@
+                @* <span class="namepro"><a asp-action="profile" asp-controller="home">@User.Identity.Name</a></span>
+
+                    <img class="picpro rounded-circle" src='~/picture/profile/@db.Accounts.SingleOrDefault(s=>s.username==User.Identity.Name).picturename' alt="عکس پروفایل" />
+                *@
+
+            </div>
+        </header>
+        <div class="div-right2">
+            <p class="group"> دسته بندی</p>
+
+
+
+
+        </div>
+     
+        <div class="body-main2">
+
+            <div class="top-pro">
+                <ul class="ul-insert">
+                    <li class="linkmenu">
+                        شبکه اجتماعی &nbsp<i class="fa fa-users" aria-hidden="true"></i>
+                    </li>
+                    <li class="inboxmenu">
+            <a class="inboxmenu2" asp-action="blogs" asp-controller="home"> دانستنی ها</a>&nbsp<i class="fa fa-blog" aria-hidden="true"></i>
+        </li>
+
+                    @*<li><a asp-action="" asp-controller="">دنبال شونده</a>&nbsp<i class="fa fa-users" aria-hidden="true"></i></li>*@
+                    @*<li class="postmenu">
+                        <a class="inboxmenu3" asp-action="addpost" asp-controller="home">پست</a>
+                        &nbsp<i class="fa fa-comment" aria-hidden="true"></i>
+
+                    </li>
+                    <li>
+                        <a asp-action="addstory" asp-controller="home"> داستان</a>&nbsp<i class="fa fa-history" aria-hidden="true"></i>
+                    </li>*@
+                    <li class="groupmenu">
+                        چت گروهی &nbsp<i class="fa fa-object-group" aria-hidden="true"></i>
+                    </li>
+                    @*   <li>
+            <a asp-action="editprofile" asp-controller="home">Notifications</a>&nbsp<i class="fa fa-user" aria-hidden="true"></i>
+        </li>*@
+                    <li>
+                        <a asp-action="fastcamera" asp-controller="guest">تماس تصویری سریع</a>&nbsp<i class="fa fa-camera" aria-hidden="true"></i>
+
+
+                    </li>
+                    <li>
+                        <a asp-action="conferance" asp-controller="guest">ویدئو کنفرانس</a>&nbsp<i class="fa fa-archive" aria-hidden="true"></i>
+
+
+                    </li>
+                    <li>
+                        <a asp-action="share" asp-controller="guest">اشتراک فایل</a>&nbsp<i class="fa fa-file-archive" aria-hidden="true"></i>
+
+
+                    </li>
+                    @{
+                        if (User.Identity.Name != null)
+                        {
+                            var user = User.Identity.Name.ToString();
+                            if (user[0] == 'g')
+                            {
+                                <li>
+                                    <a asp-action="editprofile" asp-controller="home">عضویت سریع</a>&nbsp<i class="fa fa-user-edit" aria-hidden="true"></i>
+
+
+                                </li>
+                            }
+
+                        }
+                    }
+
+                    <li>
+                        <a asp-action="setting" asp-controller="home">تنظیمات</a>&nbsp<i class="fa fa-cog" aria-hidden="true"></i>
+
+
+                    </li>
+
+                    <li>
+                        <a asp-action="callus" asp-controller="guest">تماس با ما</a>&nbsp<i class="fa fa-phone" aria-hidden="true"></i>
+
+
+                    </li>
+
+
+                </ul>
+            </div>
+            <div>
+                @Html.Partial("_statisticPartial")
+            </div>
+            @RenderBody()
+     
+        </div>
+
+        <div class="div-left2">
+            @*<p class="post"> پست های منتخب</p>*@
+            <p class="group"> دانستنی ها</p>
+            @*<p class="quest"> سوالات منتخب</p>*@
+            @*<div class="div-post"> پست های منتخب</div>*@
+            <div class="div-group">
+                @*<img class="adver" src="~/picture/logo/inver1.png" />
+                <img class="adver" src="~/picture/logo/inver2.jpg" />
+                <img class="adver" src="~/picture/logo/inver3.jpg" />
+                <img class="adver" src="~/picture/logo/inver4.png" />*@
+                @*<div id="pos-article-display-90067"></div>*@
+            </div>
+            @*  <div class="div-quest"> سوالات منتخب</div>*@
+        </div>
+        @*    <footer>
+                <div class="footer-com">
+                    Develop & Design; 2022 - Texonit-iranlo - Email: farebraaa@gmail.com
+                </div>
+            </footer>*@
+        @*/////////////////////////////////////////////////////////////*@
+
+
+
+      
+    </div>
+
+    @*/////////////////////////////////////////////////////////////*@
+
+    <div class="div-ul-links">
+        <ul class="ul-links">
+            <li><a asp-action="inbox" asp-controller="home"> پیام ها</a></li>
+            <li><a asp-action="addpost" asp-controller="home"> افزودن پست </a></li>
+            <li><a asp-action="addstory" asp-controller="home"> افزودن داستان </a></li>
+
+            <li><a asp-action="links" asp-controller="home">جستجو کاربر</a></li>
+            <li><a asp-action="follower" asp-controller="home">دنبال کننده</a></li>
+            <li><a asp-action="following" asp-controller="home">دنبال شونده</a></li>
+            <li><a asp-action="requests" asp-controller="home">درخواست</a></li>
+            <li><a asp-action="ignore" asp-controller="home">بلوک</a> </li>
+
+
+        </ul>
+    </div>
+    <div class="div-ul-group">
+        <ul class="ul-group">
+            <li><a asp-action="groups" asp-controller="home">جستجو گروه</a></li>
+            <li><a asp-action="addgroup" asp-controller="home">افزودن گروه</a></li>
+            <li><a asp-action="mygroup" asp-controller="home">گروه های من</a></li>
+
+
+
+        </ul>
+    </div>
+
+    <div class="div-show">
+        <i onclick="storyclose()" class="sclose fa fa-close"></i>
+    </div>
+
+    <div class="div-menu-xs">
+        <ul class="menu-xs">
+            <li>
+                <a asp-action="profile" asp-controller="home">پروفایل</a>&nbsp<i class="fa fa-person" aria-hidden="true"></i>
+            </li>
+
+
+            <li onclick="follow()">
+                شبکه اجتماعی &nbsp<i class="fa fa-users" aria-hidden="true"></i>
+            </li>
+            <li>
+                <a asp-action="blogs" asp-controller="home"> دانستنی ها </a>&nbsp<i class="fa fa-blog" aria-hidden="true"></i>
+            </li>
+            @*<li><a asp-action="" asp-controller="">دنبال شونده</a>&nbsp<i class="fa fa-users" aria-hidden="true"></i></li>*@
+            @*<li>
+                <a asp-action="addpost" asp-controller="home">پست</a>
+                &nbsp<i class="fa fa-comment" aria-hidden="true"></i>
+
+            </li>
+            <li>
+                <a asp-action="addstory" asp-controller="home"> داستان</a>&nbsp<i class="fa fa-history" aria-hidden="true"></i>
+            </li>*@
+            <li onclick="group()">
+                گروه &nbsp<i class="fa fa-object-group" aria-hidden="true"></i>
+            </li>
+            @*  <li>
+            <a asp-action="editprofile" asp-controller="home">Notifications</a>&nbsp<i class="fa fa-user" aria-hidden="true"></i>
+        </li>*@
+            <li>
+                <a asp-action="fastcamera" asp-controller="guest">تماس سریع</a>&nbsp<i class="fa fa-camera" aria-hidden="true"></i>
+
+
+            </li>
+            <li>
+                <a asp-action="conferance" asp-controller="guest">ویدئو کنفرانس</a>&nbsp<i class="fa fa-archive" aria-hidden="true"></i>
+
+
+            </li>
+            <li>
+                <a asp-action="share" asp-controller="guest">اشتراک فایل</a>&nbsp<i class="fa fa-file-archive" aria-hidden="true"></i>
+
+
+            </li>
+            <li>
+                <a asp-action="callus" asp-controller="guest">تماس با ما</a>&nbsp<i class="fa fa-phone" aria-hidden="true"></i>
+
+
+            </li>
+            @{
+                if (User.Identity.Name != null)
+                {
+                    var user = User.Identity.Name.ToString();
+                    if (user[0] == 'g')
+                    {
+
+
+                        <li>
+                            <a asp-action="editprofile" asp-controller="home">عضویت سریع</a>&nbsp<i class="fa fa-edit" aria-hidden="true"></i>
+
+
+                        </li>
+                    }
+                } }
+            <li>
+                <a asp-action="setting" asp-controller="home">تنظیمات</a>&nbsp<i class="fa fa-cog" aria-hidden="true"></i>
+
+
+            </li>
+            <li>
+                <a class="text-warning" asp-action="logout" asp-controller="account"> Exit</a>&nbsp<i class="fa fa-power-off" aria-hidden="true"></i>
+            </li>
+
+        </ul>
+        <ul class="ul-links2">
+            <li class="ul-b">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+            </li>
+            <li><a asp-action="inbox" asp-controller="home"> پیام ها</a></li>
+            <li><a asp-action="addpost" asp-controller="home"> افزودن پست </a></li>
+            <li><a asp-action="addstory" asp-controller="home"> افزودن داستان </a></li>
+            <li><a asp-action="links" asp-controller="home">جستجو کاربر</a></li>
+            <li><a asp-action="follower" asp-controller="home">دنبال کننده</a></li>
+            <li><a asp-action="following" asp-controller="home">دنبال شونده</a></li>
+            <li><a asp-action="requests" asp-controller="home">درخواست</a></li>
+            <li><a asp-action="ignore" asp-controller="home">بلوک</a> </li>
+
+        </ul>
+        <ul class="ul-group2">
+            <li class="ul-b">
+                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+            </li>
+
+            <li><a asp-action="groups" asp-controller="home">جستجو گروه</a></li>
+            <li><a asp-action="addgroup" asp-controller="home">افزودن گروه</a></li>
+            <li><a asp-action="mygroup" asp-controller="home">گروه های من</a></li>
+
+
+        </ul>
+    </div>
+    <div class="menu-bottom">
+        <a asp-action="profile" asp-controller="home" class="a-menu2-b">
+            <i class="fa fa-user" aria-hidden="true"></i>
+        </a>
+
+        <div class="line-menu2"></div>
+        <a asp-action="groups" asp-controller="home" class="a-menu2-b2">
+            <i class="fas fa-users" aria-hidden="true"></i>
+        </a>
+        <div class="line-menu21"></div>
+        <a asp-action="posts" asp-controller="home" class="a-menu2-b3">
+            <i class="fas fa-archive" aria-hidden="true"></i>
+        </a>
+    </div>
+    <span class="menu-bar">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+    </span>
+    @*<script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>*@
+    @*<script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>*@
+    @*<script src="~/js/chat.js"></script>
+        <script src="~/js/chat2.js"></script>*@
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+<script>
+
+
+    //$(window).bind('beforeunload', function () {
+    //   $.ajax("/account/logout").done(function(){});
+    //});
+
+
+    $(".ul-links2").css({ 'display': 'none' });
+    $(".ul-group2").css({ 'display': 'none' });
+    $(".div-menu-xs").css({ 'display': 'none' });
+
+    $(".ul-b").click(function(){
+        $(".ul-links2").css({ 'display': 'none' });
+        $(".ul-group2").css({ 'display': 'none' });
+        $(".menu-xs").css({'display':'block'});
+
+    })
+
+
+    ///////////////////////////////////////////////
+    function follow(){
+        $(".menu-xs").css({'display':'none'});
+        $(".ul-links2").css({ 'display': 'block' });
+    }
+      function group(){
+        $(".menu-xs").css({ 'display': 'none' });
+        $(".ul-group2").css({ 'display': 'block' });
+    }
+    var i = 1;
+    $(".menu-bar").click(function () {
+        i++;
+        if (i % 2 == 0) {
+            $(".div-menu-xs").css({ 'display': 'block' });
+          
+        }
+        else {
+            $(".div-menu-xs").css({ 'display': 'none' });
+
+           
+        }
+    })
+    $(".main").click(function () {
+        $(".div-menu-xs").css({ 'display': 'none' });
+
+    })
+    ///////////////////////////////////////////////
+    $(".div-show").hide();
+    function storyclose(){
+        $(".div-show").hide();
+
+    }
+    $.ajax('/home/sstory').done(function(d){
+        for (var i = 0; i <= d.length; i++) {
+            if (d.length != 0 || d.length != "") {
+                $(".div-right").append(
+                    '<div class="follow-div">'
+                    + '<img onclick="showstory(\'' + d[i].username + '\')" class="follow-pic rounded-circle" src ="/picture/profile/' + d[i].picture + '"/>'
+                    + '<p class="follow-name" onclick="postf(\'' + d[i].username + '\')" >' + d[i].username + '</p>'
+                    + '</div>'
+                )
+            }
+        }
+    })
+    function showstory(user) {
+        $.ajax('/home/showalls?user='+user).done(function(dd){
+            $(".div-show").show();
+            for(var i=0;i<=dd.length;i++)
+            {
+                if (dd[i].prefix != "video/mp4") {
+
+
+                    $('.div-show').append(
+                         '<img class="pic-modal2" src="/media/story/' + dd[i].file + '"/>'
+                    )
+                }
+                if (dd[i].prefix == "video/mp4") {
+
+                    $('.div-show').append(
+                        '<video class="pic-modal2" controls="false" id="video">'
+                        + '<source src="/media/story/' + dd[i].file + '" type="video/mp4">'
+                        + '</video>'
+                    )
+
+                }
+            }
+        
+            
+        })
+    }
+
+    var vids = $("video");
+    $.each(vids, function () {
+        this.controls = false;
+    });
+    $("#video").click(function () {
+        //console.log(this);
+        if (this.paused) {
+            this.play();
+        } else {
+            this.pause();
+        }
+    });
+  
+    //////////////////////////////////////////////////////////////////////////////////////////
+    $(document).ready(function () {
+        $(".div-ul-links").hide();
+        $(".div-ul-group").hide();
+    })
+
+    $(".linkmenu").hover(function () {
+        $(".div-ul-links").show();
+    })
+    $(".div-ul-links").mouseleave(function () {
+        $(".div-ul-links").hide();
+    })
+        $(".groupmenu").hover(function () {
+            $(".div-ul-group").show();
+        })
+        $(".div-ul-group").mouseleave(function () {
+            $(".div-ul-group").hide();
+        })
+   
+    function postf(user) {
+
+
+        if (user != "@User.Identity.Name") {
+            //$.ajax("/home/post?user=" + user).done();
+
+            var url = "https://iranlo.ir/home/post?user=" + user;
+            $(location).attr('href', url);
+        } else {
+            //$.ajax("/home/post?user=" + user + "stroy=false").done();
+
+            var url = "https://iranlo.ir/home/profile?user=" + user ;
+            $(location).attr('href', url);
+        }
+        //$.post('/home/links?username=' + user).done();
+    }
+
+</script>

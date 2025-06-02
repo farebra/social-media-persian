@@ -1,0 +1,350 @@
+﻿
+@{
+    ViewData["Title"] = "Addpost";
+    Layout = "~/Views/Shared/_LayoutAdver.cshtml";
+}
+
+<header id="header" class="clearfix">
+    <!-- navbar -->
+    <nav class="navbar navbar-default navbar-expand-lg">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#tr-mainmenu" aria-controls="tr-mainmenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"><i class="fa fa-align-justify"></i></span>
+            </button>
+            <a class="navbar-brand" href="index.html"><img class="img-fluid" src="images/logo.png" alt="Logo"></a>
+
+            <div class="collapse navbar-collapse" id="tr-mainmenu">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown"> ‌خانه<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="index.html">خانه اصلی </a></li>
+                            <li><a href="index-one.html">خانه ورژن 1</a></li>
+                            <li><a href="index-two.html">خانه ورژن 2</a></li>
+                            <li><a href="index-three.html">خانه ورژن 3</a></li>
+                            <li><a href="index-car.html">خانه ماشین ورژن 1<span class="badge">جدید</span></a></li>
+                            <li><a href="index-car-two.html">خانه ماشین ورژن 2<span class="badge">جدید</span></a></li>
+                            <li><a href="directory.html">فهرست<span class="badge">آخرین</span></a></li>
+                        </ul>
+                    </li>
+                    <li><a href="categories.html">دسته‌بندی</a></li>
+                    <li><a href="details.html">جزییات آگهی</a></li>
+                    <li><a href="faq.html">پشتیبانی</a></li>
+                    <li class="active dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">صفحات<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="about-us.html">درباره ما</a></li>
+                            <li><a href="contact-us.html">ارتباط با ما</a></li>
+                            <li class="active"><a href="ad-post.html">افزودن آگهی</a></li>
+                            <li><a href="ad-post-details.html">افزودن جزییات آگهی</a></li>
+                            <li><a href="categories-main.html"> ‌آگهی‌ها</a></li>
+                            <li><a href="details.html">جزییات آگهی</a></li>
+                            <li><a href="my-ads.html">آگهی‌های من</a></li>
+                            <li><a href="my-profile.html">پروفایل من</a></li>
+                            <li><a href="favourite-ads.html">آگهی‌های محبوب</a></li>
+                            <li><a href="archived-ads.html">آگهی‌های آرشیو شده</a></li>
+                            <li><a href="pending-ads.html">آگهی‌های در انتظار</a></li>
+                            <li><a href="delete-account.html">بستن اکانت</a></li>
+                            <li><a href="published.html">آگهی‌های منتشر شده</a></li>
+                            <li><a href="signup.html">ثبت‌نام</a></li>
+                            <li><a href="signin.html">ورود</a></li>
+                            <li><a href="faq.html">پرسش و پاسخ</a></li>
+                            <li><a href="coming-soon.html">به زودی<span class="badge">جدید</span></a></li>
+                            <li><a href="pricing.html">خرید اشتراک<span class="badge">جدید</span></a></li>
+                            <li><a href="500-page.html">500<span class="badge">جدید</span></a></li>
+                            <li><a href="404-page.html">404<span class="badge">جدید</span></a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="nav-right">
+                <div class="dropdown language-dropdown">
+                    <i class="fa fa-globe"></i>
+                    <a data-toggle="dropdown" href="#"><span class="change-text">ایران</span> <i class="fa fa-angle-down"></i></a>
+                    <ul class="dropdown-menu language-change">
+                        <li><a href="#">ایران</a></li>
+                        <li><a href="#">عراق</a></li>
+                        <li><a href="#">چین</a></li>
+                        <li><a href="#">روسیه</a></li>
+                    </ul>
+                </div><!-- language-dropdown -->
+                <!-- sign-in -->
+                <ul class="sign-in">
+                    <li><i class="fa fa-user"></i></li>
+                    <li><a href="signin.html">ورود</a></li>
+                    <li><a href="signup.html">ثبت‌نام</a></li>
+                </ul><!-- sign-in -->
+
+                <a href="ad-post.html" class="btn">افزودن آگهی شما</a>
+            </div>
+
+        </div><!-- container -->
+    </nav><!-- navbar -->
+</header><!-- header -->
+<!-- post-page -->
+<section id="main" class="clearfix ad-post-page">
+    <div class="container">
+
+        <div class="breadcrumb-section">
+            <!-- breadcrumb -->
+            <ol class="breadcrumb">
+                <li><a href="index.html">خانه</a></li>
+                <li>افزودن آگهی</li>
+            </ol><!-- breadcrumb -->
+            <h2 class="title">ارسال آگهی رایگان</h2>
+        </div><!-- banner -->
+
+
+
+        <div id="ad-post">
+            <div class="row category-tab">
+                <div class="col-lg-4 col-md-6">
+                    <div class="section cat-option select-category post-option">
+                        <h4>یک زیر شاخه را انتخاب کنید</h4>
+                        <ul role="tablist" class="nav nav-tabs">
+                            <li>
+                                <a href="#cat1" aria-controls="cat1" role="tab" data-toggle="tab">
+                                    <span class="select">
+                                        <img src="images/icon/1.png" alt="Images" class="img-">
+                                    </span>
+                                    ماشین و وسایل نقلیه
+                                </a>
+                            </li>
+
+                            <li class="">
+                                <a href="#cat2" aria-controls="cat2" role="tab" data-toggle="tab">
+                                    <span class="select">
+                                        <img src="images/icon/2.png" alt="Images" class="img-fluid">
+                                    </span>
+                                    دستگاه‌های دیجیتال  و گجت‌ها
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#cat3" aria-controls="cat3" role="tab" data-toggle="tab">
+                                    <span class="select">
+                                        <img src="images/icon/3.png" alt="Images" class="img-fluid">
+                                    </span>
+                                    املاک
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#cat4" aria-controls="cat4" role="tab" data-toggle="tab">
+                                    <span class="select">
+                                        <img src="images/icon/4.png" alt="Images" class="img-fluid">
+                                    </span>
+                                    وسایل ورزشی
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#cat5" aria-controls="cat5" role="tab" data-toggle="tab">
+                                    <span class="select">
+                                        <img src="images/icon/5.png" alt="Images" class="img-fluid">
+                                    </span>
+                                    مد و زیبایی
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#cat6" aria-controls="cat6" role="tab" data-toggle="tab">
+                                    <span class="select">
+                                        <img src="images/icon/6.png" alt="Images" class="img-fluid">
+                                    </span>
+                                    حیوانات خانگی
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#cat7" aria-controls="cat7" role="tab" data-toggle="tab">
+                                    <span class="select">
+                                        <img src="images/icon/7.png" alt="Images" class="img-fluid">
+                                    </span>
+                                    فرصت های شغلی
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#cat8" aria-controls="cat8" role="tab" data-toggle="tab">
+                                    <span class="select">
+                                        <img src="images/icon/9.png" alt="Images" class="img-fluid">
+                                    </span>
+                                    لوازم خانگی
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#cat9" aria-controls="cat9" role="tab" data-toggle="tab">
+                                    <span class="select">
+                                        <img src="images/icon/10.png" alt="Images" class="img-fluid">
+                                    </span>
+                                    خدمات مراسم عروسی
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#cat10" aria-controls="home10" role="tab" data-toggle="tab">
+                                    <span class="select">
+                                        <img src="images/icon/11.png" alt="Images" class="img-fluid">
+                                    </span>
+                                    موسیقی و هنر
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#cat11" aria-controls="cat11" role="tab" data-toggle="tab">
+                                    <span class="select">
+                                        <img src="images/icon/12.png" alt="Images" class="img-fluid">
+                                    </span>
+                                    متفرقه
+                                </a>
+                            </li>
+
+                            <li>
+                                <a href="#cat12" aria-controls="cat12" role="tab" data-toggle="tab">
+                                    <span class="select">
+                                        <img src="images/icon/8.png" alt="Images" class="img-fluid">
+                                    </span>
+                                    کتاب و مجله
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Tab panes -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="section tab-content subcategory post-option">
+                        <h4>یک زیر شاخه را انتخاب کنید</h4>
+                        <div role="tabpanel" class="tab-pane" id="cat1">
+                            <ul>
+                                <li><a href="javascript:void(0)">اتومبیل و اتوبوس</a></li>
+                                <li><a href="javascript:void(0)">موتور سیکلت و اسکوتر</a></li>
+                                <li><a href="javascript:void(0)">دوچرخه و سه‌چرخه</a></li>
+                                <li><a href="javascript:void(0)"> سه‌چرخه</a></li>
+                                <li><a href="javascript:void(0)">کامیون ، وانت و اتوبوس</a></li>
+                                <li><a href="javascript:void(0)">تراکتور </a></li>
+                                <li><a href="javascript:void(0)">قطعات و لوازم جانبی خودرو</a></li>
+                            </ul>
+                        </div>
+                        <div role="tabpanel" class="tab-pane active show" id="cat2">
+                            <ul>
+                                <li><a href="javascript:void(0)">لپتاپ</a></li>
+                                <li><a href="javascript:void(0)">گوشی موبایل</a></li>
+                                <li><a href="javascript:void(0)">فبلت و تبلت</a></li>
+                                <li><a href="javascript:void(0)">صوتی </a></li>
+                                <li><a href="javascript:void(0)">تجهیزات جانبی</a></li>
+                                <li><a href="javascript:void(0)">دوربین</a></li>
+                                <li><a href="javascript:void(0)">موبایل تجهیزات جانبی</a></li>
+                                <li><a href="javascript:void(0)">تلویزیون و دستگاه ویدئو</a></li>
+                                <li><a href="javascript:void(0)">متفرقه</a></li>
+                                <li><a href="javascript:void(0)">تلویزیون و دستگاه ویدئو تجهیزات جانبی</a></li>
+                            </ul>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="cat3">
+                            <ul>
+                                <li><a href="javascript:void(0)">رهن خانه</a></li>
+                                <li><a href="javascript:void(0)">رهن آپارتمان</a></li>
+                                <li><a href="javascript:void(0)">ویلا</a></li>
+                                <li><a href="javascript:void(0)">اجاره خانه و آپارتمان</a></li>
+                            </ul>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="cat4">
+                            <ul>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                            </ul>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="cat5">
+                            <ul>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                            </ul>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="cat6">
+                            <ul>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                            </ul>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="cat7">
+                            <ul>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                            </ul>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="cat8">
+                            <ul>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                            </ul>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="cat9">
+                            <ul>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                            </ul>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="cat10">
+                            <ul>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                            </ul>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="cat11">
+                            <ul>
+                                <li><a href="javascript:void(0)">مورد زیر گروه</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="section next-stap post-option">
+                        <h2>ارسال آگهی تنها در <span>30 ثانیه</span></h2>
+                        <p>لطفاً برای چندین مورد یا خدمات ، چندین تبلیغات ارسال نکنید. همه تبلیغات تکراری ، اسپم و طبقه بندی اشتباه حذف می شوند.</p>
+                        <div class="btn-section">
+                            <a href="ad-post-details.html" class="btn">بعدی</a>
+                            <a href="#" class="btn-info">لغو</a>
+                        </div>
+                    </div>
+                </div><!-- next-stap -->
+            </div>
+            <div class="row">
+                <div class="col-sm-12 offset-sm-2 text-center">
+                    <div class="ad-section">
+                        <a href="#"><img src="images/ads/3.jpg" alt="Image" class="img-fluid"></a>
+                    </div>
+                </div>
+            </div><!-- row -->
+        </div>
+    </div><!-- container -->
+</section><!-- post-page -->

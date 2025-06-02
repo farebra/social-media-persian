@@ -1,0 +1,160 @@
+﻿
+@inject social.Models.Contextsocial db
+@model social.Models.ViewModel.Profile
+@{
+
+	ViewData["Title"] = "Profile";
+	Layout = "~/Views/Shared/_Layoutpro.cshtml";
+	var use = db.Accounts.FirstOrDefault(t => t.accountId == Model.accountId);
+}
+
+@*<img class="pic-profile" src="~/picture/extra/profile-image.jpg" />*@
+
+
+<style>
+	
+</style>
+
+<div class="div-post-main">
+	<div class="div-post-top">
+		<div class="div-post-top-right">
+			<p class="follower-post-p">دنبال کننده</p>
+		
+			<p class="follower-post-count">@Model.follower</p>
+
+
+		</div>
+		<div class="div-post-top-center">
+			<div class="prof-div">
+				@*<div class="prof-right">*@
+				@if (use.IpAddress == "")
+				{
+					<img class="prof-pic rounded-circle" src="~/picture/profile/@Model.picturename" alt="عکس پروفایل" />
+				}else
+				{
+					<img class="prof-pic2 rounded-circle" src="~/picture/profile/@Model.picturename" alt="عکس پروفایل" />
+
+				}
+				<p class="prof-name">@Model.username</p>
+				</div>
+				@*			<div class="prof-left">
+
+					@if (Model.username != User.Identity.Name)
+					{
+						if (followingt == false)
+						{
+							<p class="prof-follower" onclick="follower('@Model.username');">
+								<i class="fa fa-plus" aria-hidden="true"></i>
+								دنبال کردن
+							</p>
+						}
+						else
+						{
+							<p class="prof-follower" onclick="followercl('@Model.username');">
+								<i class="icon-remove"></i> icon-remove
+								لغو پیوند
+							</p>
+						}
+					}
+					<p class="prof-send" onclick="send('@Model.username')">
+						<i class="fa fa-paper-plane" aria-hidden="true"></i>
+						ارسال پیام
+					</p>
+					<p class="prof-ignore" onclick="ignore('@Model.username')">
+						<i class="fa fa-ban" aria-hidden="true"></i>
+						مسدود کردن
+					</p>
+
+*@
+			</div>
+	
+		<div class="div-post-top-left">
+			<p class="following-post-p">دنبال شونده</p>
+		
+			
+				<p class="following-post-count">@Model.following</p>
+			
+		</div>
+	</div>
+
+	
+	
+	<div class="div-post-bottom">
+	
+				
+		
+		
+		
+	</div>
+
+	</div>
+
+
+
+
+@*<input type="hidden" id="userprof" value="@ViewBag.user" />*@
+				<script>
+	//var user = $("#userprof").val();
+
+	//////////////////////////////////////postshow
+
+	
+	$.ajax('/home/postsjson?accid=' + @Model.accountId).done(function (d) {
+		for(var i=0;i<=d.length;i++)
+		{
+			if(d[i].prefix!="video/mp4"){
+
+			
+		$('.div-post-bottom').append(
+				'<div onClick="showp(\'' +  d[i].pic + '\');" class="post-pic-click">'
+		+'<img class="img-com-user" src="/picture/post/'+d[i].pic+'"/>'
+		+'</div>'
+		)
+			}
+				if (d[i].prefix == "video/mp4") {
+					
+	$('.div-post-bottom').append(
+				'<div onClick="showp(\'' +  d[i].pic + '\');" class="post-pic-click">'
+								+ '<video class="img-com-user">'
+							+'<source src="/picture/post/'+d[i].pic+'" type="video/mp4">'
+							+'</video>'
+		+'</div>'
+		)
+
+				}
+		}
+	})
+	var vids = $(".img-com-user");
+	$.each(vids, function () {
+		this.controls = false;
+	});
+	////////////////////////////////////////////
+	//function followercl(user) {
+	//	$.ajax('home/nofollower?username=' + user).done();
+	//	var url = "https://iranlo.ir/home/follower";
+	//	$(location).attr('href', url);
+	//}
+	//function follower(user)
+	//{
+	//	$.ajax('home/addfollower?username=' + user).done();
+	//	var url = "https://iranlo.ir/home/follower";
+	//	$(location).attr('href', url);
+	//}
+	//function send(user) {
+	//	$.ajax('home/persons?username=' + user).done();
+
+	//	var url = "https://iranlo.ir/home/inbox?username=" + user;
+	//		$(location).attr('href', url);
+	//		//$.post('/home/links?username=' + user).done();
+		
+	//}
+	//function ignore(user) {
+	//	$.ajax('home/ignorejson?username=' + user).done();
+	//	var url = "https://iranlo.ir/home/ignore";
+	//	$(location).attr('href', url);
+	//}
+	function showp(picname) {
+        var url = 'https://iranlo.ir/home/showpost?accountId=' + @Model.accountId + '&name=' + picname;
+		$(location).attr('href', url);
+	}
+				</script>

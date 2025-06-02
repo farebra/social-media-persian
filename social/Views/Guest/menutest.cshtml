@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewData["Title"] = "menutest";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+
+    .dmenutest {
+        width: 100%;
+        height: 593px;
+        position: absolute;
+        top: 50px;
+        left: 0;
+    }
+    .menutest{
+        position:absolute;
+        top:10px;
+        left:20px;
+    }
+    .menutest li{
+       
+        border:4px solid #2d55a7;
+        margin-right:90px;
+        margin-top:40px;
+        float:right;
+        text-align:center;
+        list-style:none;
+    }
+        .menutest img {
+            height: 170px;
+            width: 200px;
+        }
+        .menutest p {
+            border: 4px solid #a1a1a1;
+            font-size:18px;
+            font-weight:bold;
+            color:white;
+            margin-top:10px;
+        }
+</style>
+
+    <div class="dmenutest">
+        <ul class="menutest">
+            <li>
+                <img src="./picture/menu/inbox.png" class="minbox" />
+                <p class="">پیام ها</p>
+            </li>
+            <li>
+                <img src="./picture/menu/post.jpg" class="mpost" />
+                <p class=""> پست ها</p>
+            </li>
+            <li>
+                <img src="./picture/menu/story.jpg" class="mstory" />
+                <p class="">داستان</p>
+            </li>
+            <li>
+                <img src="./picture/menu/group.png" class="mgroup" />
+                <p class="">چت گروهی</p>
+            </li>
+            <li>
+                <img src="./picture/menu/call.jpg" class="mcall" />
+                <p class="">تماس سریع </p>
+            </li>
+            <li>
+                <img src="./picture/menu/video.png" class="mvideo" />
+                <p class="">ویدئو کنفرانس</p>
+            </li>
+            <li>
+                <img src="./picture/menu/share.webp" class="mshare" />
+                <p class="">اشتراک فایل</p>
+            </li>
+            <li>
+                <img src="./picture/menu/profile.webp" class="mprofile" />
+                <p class="">پروفایل</p>
+            </li>
+            @*<li>
+                <img src="./picture/menu/setting.png" class="msetting" />
+                <p class="">تنظیمات</p>
+            </li>*@
+
+
+        </ul>
+    </div>

@@ -1,0 +1,47 @@
+﻿@model social.Models.Entity.Account
+
+@{
+    Layout = null;
+}
+
+
+    <br/><br /><br /><br />
+    <div class="login-box">
+        <div class="login-logo">
+            <h4 style="color:#2b2b2b;"><b>تغییر کلمه عبور</b></h4>
+        </div>
+        <!-- /.login-logo -->
+        <div class="login-box-body">
+        
+
+
+
+
+
+
+                        <form action="/Admin/editlogin" Method="post">
+                            {
+
+
+                            <div class="form-group has-feedback">
+                                <input type="password" name="password" id="pass" value="@Model.password" class="form-control" placeholder="کلمه عبور جدید">
+                                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+                            </div>
+                            <div class="row">
+              
+                                <div class="col-xs-6">
+                                    <button type="submit" name="saveadmin" class="btn btn-primary btn-block btn-flat">ذخیره</button>
+                                </div>
+                                <div class="col-xs-6">
+                                    <button type="submit" onclick="location.href='@Url.Action("Index", "Admin")';return false;" name="canseladmin" class="btn btn-danger btn-block  ">انصراف</button>
+                                </div>
+                    
+                            </div>
+
+                          </form>
+                           
+                            <br />
+                            <h5 style="color:red;">@ViewBag.error</h5>
+</div>
+        <!-- /.login-box-body -->
+    </div>

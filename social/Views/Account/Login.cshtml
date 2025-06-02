@@ -1,0 +1,111 @@
+﻿@model social.Models.ViewModel.Login
+@inject social.Models.Contextsocial db
+
+@{
+    ViewData["Title"] = "Login";
+    Layout = "~/Views/Shared/_LayoutAc.cshtml";
+}
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<style>
+    body {
+        background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 100%);
+    }
+
+ 
+</style>
+<script>
+  
+   
+    //function onload() {
+    //    var element = document.getElementById('submit');
+    //    element.onclick = validate;
+    //}
+</script>
+<div class="dheaderh2">
+    <p class="headerh2">شبکه اجتماعی ایرانلو </p>
+</div>
+<br />
+<br />
+<form class="form-login2" asp-action="Guest" asp-controller="account" method="post">
+    <input id="submit" type="submit" value="مهمان" class="login-btn2" />
+
+</form>
+  <form class="form-login" action="/account/login" method="post">
+
+<div class="login-div">
+  
+
+        <p class="login-text">ورود به کاربری </p>
+   
+            <input class="login-user" id="user" asp-for="@Model.username" type="text" placeholder="نام کاربری" />
+
+        <input class="login-pass" id="pass" asp-for="@Model.password" type="password" placeholder="کلمه عبور" />
+
+        <div id="recaptcha" class="g-recaptcha" data-sitekey="6Lc-Xe4hAAAAAMxL375o6uRIW8_ri9b4X8k0E8yQ" data-callback="verifyCallback"></div>
+
+
+        <input id="submit" type="submit" value="ورود" class="login-btn" />
+  
+      
+    </div>
+
+
+
+   </form>
+@*<a  asp-action="register" asp-controller="account" class="a-regis">Register</a>*@
+<a asp-action="" asp-controller="account" class="a-forget">Forgot Password</a>
+@if (ViewBag.error!="")
+{
+    <p class="alert-login">@ViewBag.error</p>
+
+}
+else{
+    <p class="alert-login"></p>
+
+}
+<script>
+
+     $(".form-login").submit(function (e) {
+         if ($("#user").val() == "" || $("#pass").val() == "") {
+             e.preventDefault();
+             $(".alert-login").html("نام کاربری و کلمه عبور را وارد کنید");
+             return false;
+         }
+         var response = window.grecaptcha.getResponse();
+         //recaptcha failed validation
+         if (response.length == 0) {
+             e.preventDefault();
+             $('#recaptcha-error').show();
+         }
+         //recaptcha passed validation
+         else {
+             $('#recaptcha-error').hide();
+         }
+         if (e.isDefaultPrevented()) {
+             return false;
+         } else {
+             return true;
+         }
+     });
+
+    ////$(".form-login2").submit(function (e) {
+ 
+    ////    var response = window.grecaptcha.getResponse();
+    ////    //recaptcha failed validation
+    ////    if (response.length == 0) {
+    ////        e.preventDefault();
+    ////        $('#recaptcha-error').show();
+    ////    }
+    ////    //recaptcha passed validation
+    ////    else {
+    ////        $('#recaptcha-error').hide();
+    ////    }
+    ////    if (e.isDefaultPrevented()) {
+    ////        return false;
+    ////    } else {
+    ////        return true;
+    ////    }
+    ////});
+</script>

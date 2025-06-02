@@ -1,0 +1,180 @@
+﻿
+@{
+    ViewData["Title"] = "Links";
+    Layout = "~/Views/Shared/_Layoutpro.cshtml";
+}
+<style>
+  
+</style>
+<div>
+<div class="div-search">
+        <input type="text" class="text-search" placeholder=" جستجو کاربر"/>
+    <input type="button" class="btn-search" value="جستجو"/>
+</div>
+<div class="search-div-main">
+       
+      
+</div>
+</div>
+<script>
+
+  
+
+    //////////////////////////////onchange
+
+
+    //$(".text-search").change(function () {
+    //    var user = $(".text-search").val();
+
+    //    $.ajax('/home/linksjson?username=' + user)
+    //        .done(function(d){
+    //            for(var i = 0; i<= d.length; i++)
+    //{
+       
+
+    //    $("#search-div").append(
+    //        '<div onclick="postf(\'' + d[i].username + '\')">'
+    //        +'<img class="search-pic rounded-circle" src ="~/picture/profile/' + d[i].picture + '" alt = "عکس پروفایل" />'
+    //        + '<p class="search-name" >' + d[i].username + '</p>'
+    //        + '<a onclick="links(\'' + d[i].username + '\')" class= "search-p-follower-no"> پیوند </a>'
+    //        +'</div>'
+    //    )
+    //}
+    //                        })
+
+
+    //                   })
+    //                   function postf(user)
+    //                   {
+    //        $.post('/home/links?username=' + user).done();
+    //                   }
+    /////////////////////////////onclcik
+    $(".btn-search").click(function () {
+        var user = $(".text-search").val();
+        $(".search-div-main").html('');
+        $.ajax('/home/linksjson?username='+user)
+            .done(function(d){
+                for(var i = 0; i<= d.length; i++)
+    {
+        if(d.state!="false")
+        {
+                      //if (d[i].username != "@User.Identity.Name"){
+
+                       
+                            //alert(d[i].follow);
+                            //alert(d[i].wing);
+
+//&& d[i].username == "@User.Identity.Name"
+                        if (d[i].wing == true && d[i].follow == true && d[i].wing2 == true && d[i].follow2 == true) {
+
+                            $(".search-div-main").append(
+                                '<div class="search-div" onclick="postf(\'' + d[i].username + '\')">'
+                                + '<img class="search-pic rounded-circle" src ="/picture/profile/' + d[i].picture + '" alt = "عکس پروفایل" />'
+                                + '<p class="search-name" >' + d[i].username + '</p>'
+                                + '<a onclick="followercl(\'' + d[i].username + '\')" class= "search-p-follower-no"> حذف </a>'
+
+
+                            )
+                        }
+                       else if (d[i].wing2 == true && d[i].follow == true ) {
+
+                            $(".search-div-main").append(
+                                '<div class="search-div" onclick="postf(\'' + d[i].username + '\')">'
+                                + '<img class="search-pic rounded-circle" src ="/picture/profile/' + d[i].picture + '" alt = "عکس پروفایل" />'
+                                + '<p class="search-name" >' + d[i].username + '</p>'
+                                + '<a onclick="followercl(\'' + d[i].username + '\')" class= "search-p-follower-no"> حذف </a>'
+
+                           
+                            )
+                            }
+                       else if (d[i].wing == true && d[i].follow2 == true ) {
+                                    
+                                    $(".search-div-main").append(
+                                        '<div class="search-div" onclick="postf(\'' + d[i].username + '\')">'
+                                + '<img class="search-pic rounded-circle" src ="/picture/profile/' + d[i].picture + '" alt = "عکس پروفایل" />'
+                                        + '<p class="search-name" >' + d[i].username + '</p>'
+                                + '<a onclick="links(\'' + d[i].username + '\')" class= "search-p-follower-no">  پیوند </a>'
+
+
+
+
+                                    )
+                            
+                        }
+                               else if (d[i].wing == false && d[i].follow2 == false && d[i].wing2 == false && d[i].follow == false&&d[i].request==true) {
+                                {
+                                    $(".search-div-main").append(
+                                        '<div class="search-div" onclick="postf(\'' + d[i].username + '\')">'
+                                    + '<img class="search-pic rounded-circle" src ="/picture/profile/' + d[i].picture + '" alt = "عکس پروفایل" />'
+                                        + '<p class="search-name" >' + d[i].username + '</p>'
+                                    + '<a class= "search-p-follower-no"> در حال بررسی  </a>'
+
+
+
+                                    )
+
+                                }
+                                }
+                                   else if (d[i].wing == false && d[i].follow2 == false && d[i].wing2 == false && d[i].follow == false) {
+                                {
+                                    $(".search-div-main").append(
+                                        '<div class="search-div" onclick="postf(\'' + d[i].username + '\')">'
+                                    + '<img class="search-pic rounded-circle" src ="/picture/profile/' + d[i].picture + '" alt = "عکس پروفایل" />'
+                                        + '<p class="search-name" >' + d[i].username + '</p>'
+                                        + '<a onclick="links(\'' + d[i].username + '\')" class= "search-p-follower-no">  پیوند </a>'
+
+
+
+                                    )
+
+                                }
+                        }
+                       
+                       
+
+                        }
+                    
+        
+               }
+               
+                if (d.state == "false") {
+                    $(".search-div-main").append(
+                        '<div class="search-div">'
+                        + '<p class="search-name" >User Not Found</p>'
+
+                    )
+                }
+                        })
+
+                   
+                   })
+    function followercl(user) {
+        $.ajax('/home/nofollower?username=' + user+'&state=follower').done(function (d) {
+
+            if(d.state = "true") {
+                var url = "https://iranlo.ir/home/profile";
+                $(location).attr('href', url)
+            }
+        });
+        ;
+    }
+    function postf(user) {
+        var url = "https://iranlo.ir/home/post?user=" + user;
+        $(location).attr('href', url);
+        //$.post('/home/links?username=' + user).done();
+    }
+    function links(user) {
+        $.ajax('/home/addlinks?username=' + user).done();
+    }
+</script>
+@section Scripts{
+   <script>
+                $(".linkmenu").css({ 'background': 'white', 'border': '2px solid #0751a1','color':'#0751a1','padding':'5px 8px 1px 5px' });
+        $(".profile-li").css({ 'background': '#bd9119', 'color': 'white' });
+
+    </script>
+
+
+
+}
+        

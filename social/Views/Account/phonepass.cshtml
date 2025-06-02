@@ -1,0 +1,48 @@
+﻿@model social.Models.ViewModel.Phone
+@{
+    ViewData["Title"] = "phonepass";
+    Layout = "~/Views/Shared/_LayoutAc.cshtml";
+}
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<style>
+   /* body {
+        background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 100%);
+    }*/
+</style>
+<script>
+
+    $('.form-login').submit(function (e) {
+        if ($(".regis-mobile").val() == "") {
+            e.preventDefault();
+            $(".alert-regis").html("شماره موبایل را وارد کنید");
+        }
+    })
+</script>
+<form class="form-login" asp-action="phonepass" asp-controller="account" method="post">
+
+
+
+    <div class="regis-div">
+
+        <p class="regis-text">کلمه عبور جدید</p>
+
+        <input id="regis-mobile" class="regis-mobile" asp-for="phone" type="number" placeholder="شماره موبایل" />
+
+
+        <input type="submit" value="کد دریافتی" class="regis-btn" />
+
+    </div>
+</form>
+<a asp-action="login" asp-controller="account" class="a-login">ورود</a>
+@if (ViewBag.regis != "")
+{
+    <p class="alert-regis">@ViewBag.regis</p>
+}
+else
+{
+    <p class="alert-regis"></p>
+
+}
+

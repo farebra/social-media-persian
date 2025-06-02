@@ -1,0 +1,170 @@
+﻿@inject social.Models.Contextsocial db
+@model social.Models.Entity.PostM
+@{
+    ViewData["Title"] = "showpost";
+    Layout = "~/Views/Shared/_Layoutpro.cshtml";
+    var ac = db.Accounts.FirstOrDefault(d => d.accountId == Model.accountId);
+}
+<style>
+</style>
+<div class="div-post-main2">
+    @{
+        if (Model.prefix == "video/mp4")
+        {
+        <div class="div-post-view">
+            <video class="img-post-view" controls autoplay>
+                <source src="/picture/post/@Model.pic" type="video/mp4">
+                
+            </video>
+            <p class="p-post-view">@Model.textAll</p>
+        </div>
+        }
+        else
+        { 
+            <div class="div-post-view">
+                <img class="img-post-view" onclick="openModal()" src="~/picture/post/@Model.pic" />
+                <p class="p-post-view">@Model.textAll</p>
+            </div>
+        }
+
+    }
+
+    <div class="div-utility-comment">
+
+
+        @if (User.Identity.Name == ac.username&&Model.pic!="angize.mp4")
+        {
+            <p class="trash" onclick="trashp('@Model.postId')" style="color:red;"><i class="fa fa-trash" aria-hidden="true"></i>حذف پست</p>
+        }
+    </div>
+    <div class="div-comment">
+        <div class="div-com-main">
+            <textarea class="com-post" placeholder="تایپ نظر"></textarea>
+            <input type="hidden" value="@Model.postId" class="pidh" />
+            <input type="button" value="ارسال" class="btn-com" />
+        </div>
+        <div class="div-com">
+
+        </div>
+    </div>
+</div>
+<div id="myModal" class="modal">
+
+    <span class="close cursor" onclick="closeModal()">&times;</span>
+    <img src="~/picture/chat/@Model.pic" class="pic-modal">
+
+</div>
+<script>
+    var pi = $(".pidh").val();
+    $.ajax('/home/countsee?postid=' + pi).done();
+    $.ajax('/home/countshow?postid=' + pi).done(function (d) {
+        if (d[0].slike == true) {
+            $(".div-utility-comment").append(
+                '<p class="countsee">' + d[0].count + '&nbsp<i class="fa fa-user" aria-hidden="true" ></i>بازدید</p>'
+                + '<p style="color:red;" class="like" onclick=likef(\'' + pi + '\');>' + d[0].like + '&nbsp<i class="fa fa-heart" aria-hidden="true" ></i>بازخورد</p>'
+                + '<p class="report"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>گزارش</p>'
+
+            )
+        }
+        else if (d[0].slike == false) {
+            $(".div-utility-comment").append(
+                '<p class="countsee">' + d[0].count + '&nbsp<i class="fa fa-user" aria-hidden="true" ></i>بازدید</p>'
+                + '<p class="like" onclick=likef(\'' + pi + '\');>' + d[0].like + '&nbsp<i class="fa fa-heart" aria-hidden="true" ></i>بازخورد</p>'
+                + '<p class="report"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>گزارش</p>'
+
+
+            )
+        }
+        else {
+            $(".div-utility-comment").append(
+                '<p class="countsee">' + d[0].count + '&nbsp<i class="fa fa-user" aria-hidden="true" ></i>بازدید</p>'
+                + '<p class="like" onclick=likef(\'' + pi + '\');>' + d[0].like + '&nbsp<i class="fa fa-heart" aria-hidden="true" ></i>بازخورد</p>'
+                + '<p class="report"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>گزارش</p>'
+
+
+            )
+        }
+    });
+    $(".like").css({ 'color': 'gray' });
+    function likef(pid) {
+        $.ajax('/home/countlike?postid=' + pid).done(function (d) {
+
+            if (d[0].slike == true) {
+                $(".div-utility-comment").html('');
+                $(".div-utility-comment").append(
+                    '<p class="countsee">' + d[0].count + '<i class="fa fa-user" aria-hidden="true" ></i>بازدید</p>'
+                    + '<p style="color:red;" class="like" onclick=likef(\'' + pi + '\');>' + d[0].like + '<i class="fa fa-heart" aria-hidden="true" ></i>بازخورد</p>'
+                    + '<p class="report"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>گزارش</p>'
+
+
+                )
+            }
+            else if (d[0].slike == false) {
+                $(".div-utility-comment").html('');
+                $(".div-utility-comment").append(
+                    '<p class="countsee">' + d[0].count + '<i class="fa fa-user" aria-hidden="true" ></i>بازدید</p>'
+                    + '<p class="like" onclick=likef(\'' + pi + '\');>' + d[0].like + '<i class="fa fa-heart" aria-hidden="true" ></i>بازخورد</p>'
+                    + '<p class="report"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>گزارش</p>'
+
+                )
+            }
+
+
+        });
+    }
+    $(".report").click(function () {
+        $.ajax('/home/counreport?postid=' + pi).done();
+
+
+    })
+    function trashp(pi) {
+        $.ajax('/home/trashpost?postid=' + pi).done(function (d) {
+
+            if (d.state == "true") {
+                var url = "https://iranlo.ir/home/profile";
+                $(location).attr('href', url)
+            }
+        });
+
+
+    }
+    cm();
+    $(".btn-com").click(function () {
+        var tc = $(".com-post").val();
+        var pi = $(".pidh").val();
+        $.ajax('/home/compost?pid=' + pi + '&txt=' + tc).done(function (dd) {
+            if (dd.state == "true") {
+                cm();
+
+            }
+        });
+    })
+    function cm() {
+        var pi = $(".pidh").val();
+        $(".com-post").html('');
+        $.ajax('/home/showcom?postid=' + pi).done(function (d) {
+            for (var i = 0; i <= d.length; i++) {
+                $(".div-com").append(
+                    '<div class="div-com-text">'
+                    + '<p onclick="postf(\'' + d[i].username + '\')" class="p-com-user">' + d[i].username + '</p>'
+                    + '<p class="p-com-text" >' + d[i].text + '</p>'
+                    + '</div>'
+                )
+            }
+        })
+    }
+    function openModal() {
+        document.getElementById("myModal").style.display = "block";
+    }
+
+    function closeModal() {
+        document.getElementById("myModal").style.display = "none";
+    }
+    function postf(user) {
+        var url = "https://iranlo.ir/home/post?user=" + user;
+        $(location).attr('href', url);
+        //$.post('/home/links?username=' + user).done();
+    }
+
+</script>
+

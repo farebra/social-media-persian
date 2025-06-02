@@ -1,0 +1,50 @@
+﻿@model social.Models.ViewModel.Authcode
+
+@{
+    ViewData["Title"] = "AuthCode";
+    Layout = "~/Views/Shared/_LayoutAc.cshtml";
+}
+<style>
+    body{
+    background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 0%, rgba(0,212,255,1) 100%);
+    }
+</style>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+@*<script src="https://www.google.com/recaptcha/api.js" async defer></script>*@
+<script>
+    $('.form-login').submit(function (e) {
+        if ($(".regis-mobile2").val() == "") {
+            e.preventDefault();
+            $(".alert-code").html("کد ارسالی را وارد کنید");
+        }
+    })
+
+</script>
+    <form class="form-login" asp-action="AuthCode" method="post">
+  
+
+
+<div class="regis-div">
+
+		@*@ViewBag.co*@
+        <p class="regis-text">ارسال کد به ایمیل </p>
+
+       
+            <input id="regis-mobile2" asp-for="authCode" class="regis-mobile" name="active" type="number" placeholder="ُارسال کد" />
+        @*<div class="g-recaptcha" data-sitekey="6Lc-Xe4hAAAAAMxL375o6uRIW8_ri9b4X8k0E8yQ"></div>*@
+
+    <input type="submit" value="ارسال" class="regis-btn"/>
+    </div>
+</form>
+
+@if (ViewBag.code!="")
+{
+    <p class="alert-code">@ViewBag.code</p>
+
+}
+else{
+    <p class="alert-code"></p>
+
+}
+

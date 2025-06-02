@@ -1,0 +1,1100 @@
+﻿@inject social.Models.Contextsocial db
+@using social.Models.ViewModel
+
+@{
+    ViewData["Title"] = "Inbox";
+    Layout = "~/Views/Shared/_Layoutpro.cshtml";
+
+}
+<style>
+  /*  #live {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #000;
+        display: none;
+    }
+
+    #local-video {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 250px;
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        margin: 16px;
+        border: 2px solid #fff;
+    }
+
+    #remote-video {
+        position: absolute;
+       width: 100%;
+        height: 500px;
+        top: 0%;
+        left:0%;
+    }
+
+    #end-call {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        padding: 8px;
+        background-color: red;
+        color: white;
+        border: none;
+        margin: 16px;
+    }
+    .aler{
+        position:absolute;
+        width:20%;
+        height:180px;
+        right:40%;
+        top:130px;
+        background-color:cadetblue;
+    }
+
+    .aler2 {
+        position: absolute;
+        width: 40%;
+        height: 180px;
+        right: 30%;
+        top: 130px;
+        background-color: cadetblue;
+    }*/
+</style>
+
+<div id="live">
+    <video id="remote-video"></video>
+    <video id="local-video" muted="true"></video>
+    <p id="end-call" onclick="endcall()">قطع تماس</p>
+</div>
+<div class="main-box">
+    <div class="ut-box">
+        <p class="back-btn">بازگشت به لیست</p>
+
+        @*<p id="phone-btn" class="phone-btn">Voice Call &nbsp<i class="fa fa-phone" aria-hidden="true"></i></p>*@
+        <p id="camera-btn" class="camera-btn"> تماس تصویری &nbsp<i class="fa fa-camera" aria-hidden="true"></i></p>
+
+        @*<p onclick="endcall()" class="end-btn">End Call</p>*@
+
+    </div>
+    <div class="side-box">
+        
+          
+	@*	@foreach (var i in people)
+        {
+            user22 = i.username;
+            <div class="mes-pro">
+                
+                <img class="mes-pic" src="picture/profile/@i.picturename" />
+            <p onClick="show('@i.username')" class="mes-name">@i.username &nbsp<span class="badge badge-info">@i.count</span></p>
+            <span onClick="delperson('@i.username')" class="mes-name mes-name2">&nbsp&nbsp<i class="fa fa-trash text-danger" aria-hidden="true"></i></span>
+
+                </div>
+		}*@
+  
+		</div> 
+		<div class="mess-box">
+     
+        <div class="box-pro">
+            <div class="box-type">
+
+            </div>
+			
+			</div>
+      
+    </div>
+    <div class="form-box">
+       
+<form id="chatForm">
+            <textarea type="text" onkeypress="keyptype('@User.Identity.Name')" onkeydown="keydtype('@User.Identity.Name')" id="messageTextBox" class="form-tarea" onkeyup="findType(this)"></textarea>
+            <input type="hidden" id="rTextBox" value="@User.Identity.Name" />
+          
+            <input type="hidden" id="xTextBox" value="@ViewBag.uid"/>
+
+           
+
+
+
+            <button type="submit" class="form-btn-box"><i class="fa">&#xf1d9;</i></button>
+        </form>
+    
+        <label class="form-btn-pic">
+            <i class="fa fa-upload" aria-hidden="true"></i>
+
+            <input type="file" accept="audio/*,video/*,.xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf,.zip,.rar,.7zip" class="file" id="file" name="file" style="visibility:hidden" />
+
+        </label>
+        <p class="btnsendvoice">
+            <i class="fa fa-microphone" aria-hidden="true"></i>
+        </p>
+    
+    
+   </div>
+</div>
+@*<div class="aler">
+    <p id="aler-name1"></p>
+    <button onclick="endCall()">End Call</button>
+</div>
+<div class="aler2">
+    <p id="aler-name2"></p>
+    <button onclick="callUser2()">Accept </button>
+
+    <button onclick="endCall()">Reject</button>
+</div>*@
+@*<input type="hidden" id="rTextBox" value="@User.Identity.Name" />*@
+<script>
+
+
+    ////////////////////////////////////////////////////////////////
+    var user2 = $("#xTextBox").val();
+    var usermaster = '@User.Identity.Name';
+    var user = '@User.Identity.Name';
+    var user1 = '@User.Identity.Name';
+
+    var user22;
+    ////////////////////////////////////////
+   
+  
+    //peer.on("open", function (id) {
+    //        pid=id;
+    //        $.ajax("/home/peerjs?uid1=" + user1 + "&uid2=" + user2 + "&peerid=" + id).done(function () { });
+
+    //});
+    //////////////////////////////////////////////////////////peeerjs
+
+    /////////////////////////////////////peercall
+//    var puser1, puser2, cuser1, cuser2, puser;
+
+  
+//   async function callUser() {
+//        callback();
+//        callUserr()
+//        console.log("pid",puser);
+//        console.log("user1", puser1);
+//        console.log("user2", puser2);
+//        console.log("cuser1", cuser1);
+//        console.log("cuser2", cuser2);
+//        console.log("user", user1);
+
+//        $("#end-call").show();
+
+//        $(".end-btn").show();
+//        $(".phone-btn").hide();
+//        $(".camera-btn").hide();
+//        $(".back-btn").hide();
+//        $(".mess-box").hide();
+//        $(".form-box").hide();
+
+//            if (puser1 == user1 && cuser1 == true && cuser2 == false) {
+//          $(".aler").show();
+//                document.getElementById("aler-name1").textContent = puser2;
+//         //get the id entered by the user
+              
+             
+
+//                const peerId = puser;
+//            var stream =await navigator.mediaDevices.getUserMedia({
+//                video: true,
+//                audio: true,
+//            }); 
+//            document.getElementById("live").style.display = "block";
+//            document.getElementById("local-video").srcObject = stream;
+//            document.getElementById("local-video").play();
+//                var call = peer.call(peerId, stream);
+//            call.on("stream", (stream) => {
+//                document.getElementById("remote-video").srcObject = stream;
+//                document.getElementById("remote-video").play();
+//            });
+//            call.on("data", (stream) => {
+//            document.getElementById("#remote-video").srcObject = stream;
+//            });
+//            call.on("error", (err) => {
+//                console.log(err);
+//            });
+//            call.on('close', () => {
+//                endCall()
+//            }) 
+//            currentCall = call;
+//           }
+//           }
+//                var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+//                peer.on('call', function (call) {
+//                    getUserMedia({ video: true, audio: true }, function (stream) {
+//                        console.log('Received stream1', stream);
+
+//                        call.answer(stream);  
+//                        document.querySelector("#live").style.display = "block";
+//                        call.on('stream', function (remoteStream) {
+//                            $(".aler").hide();
+
+//                            console.log('Received stream2', remoteStream);
+//                            const video = document.getElementById("remote-video");
+//                            video.srcObject = remoteStream;
+//                            video.onloadedmetadata = () => {
+//                                video.play();
+//                            };
+//                        });
+//                    })
+//                }, function (err) {
+//                    console.log('Failed to get local stream', err);
+
+//                });
+       
+/////////////////////////////////////////////////////////////////////
+//   async function callUserr() {
+//        callback();
+//        console.log(puser);
+//        $(".end-btn").show();
+//            $(".phone-btn").hide();
+//            $(".camera-btn").hide();
+//            $(".back-btn").hide();
+//            $("#end-call").show();
+//        $(".mess-box").hide();
+//        $(".form-box").hide();
+//            if (puser2 == user1 && cuser1 == true && cuser2 == false) {
+//                $(".aler2").show();
+//                document.getElementById("aler-name2").textContent = puser1;
+//                //get the id entered by the user
+              
+//                const peerId = puser;
+
+//                var stream =await navigator.mediaDevices.getUserMedia({
+//                    video: true,
+//                    audio: true,
+//                });
+//                document.getElementById("live").style.display = "block";
+//                document.getElementById("local-video").srcObject = stream;
+//                document.getElementById("local-video").play();
+//                var call = peer.call(peerId, stream);
+//                call.on("stream", (stream) => {
+//                    document.getElementById("remote-video").srcObject = stream;
+//                    document.getElementById("remote-video").play();
+//                });
+//                call.on("data", (stream) => {
+//                    document.getElementById("#remote-video").srcObject = stream;
+//                });
+//                call.on("error", (err) => {
+//                    console.log(err);
+//                });
+//                call.on('close', () => {
+//                    endCall()
+//                })
+//                currentCall = call;
+//            }
+       
+//    }
+
+//    var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+//    peer.on('call', function (call) {
+//        getUserMedia({ video: true, audio: true }, function (stream) {
+//            console.log('Received stream1', stream);
+
+//            call.answer(stream);  
+//            document.querySelector("#live").style.display = "block";
+//            call.on('stream', function (remoteStream) {
+//                $(".aler2").hide();
+
+                              
+//                    console.log('Received stream2', remoteStream);
+//                const video = document.getElementById("remote-video");
+//                video.srcObject = remoteStream;
+//                video.onloadedmetadata = () => {
+//                    video.play();
+//                };
+//            });
+//        })
+//    }, function (err) {
+//        console.log('Failed to get local stream', err);
+
+//    });
+
+
+
+//////////////////////////////////////////////////////////////////
+
+   
+
+    //   async function callUser2() {
+    //    callback();
+    //    callUserr2();
+    //    console.log(puser);
+
+    //    $(".end-btn").show();
+    //        $(".phone-btn").hide();
+    //        $(".camera-btn").hide();
+    //        $(".back-btn").hide();
+    //        $("#end-call").show();
+
+    //        if (puser2 != user1 && cuser1 == false && cuser2 == true) {
+             
+    //            //document.getElementById("aler-name2").textContent = puser2;
+    //             //get the id entered by the user
+            
+    //            const peerId = puser;
+
+    //                var stream =await navigator.mediaDevices.getUserMedia({
+    //                    video: true,
+    //                    audio: true,
+    //                }); 
+    //                document.getElementById("live").style.display = "block";
+    //                document.getElementById("local-video").srcObject = stream;
+    //                document.getElementById("local-video").play(); 
+    //            var call = peer.call(peerId, stream);
+    //                call.on("stream", (stream) => {
+    //                    document.getElementById("remote-video").srcObject = stream;
+    //                    document.getElementById("remote-video").play();
+    //                });
+    //                call.on("data", (stream) => {
+    //                    document.getElementById("#remote-video").srcObject = stream;
+    //                });
+    //                call.on("error", (err) => {
+    //                    console.log(err);
+    //                });
+    //                call.on('close', () => {
+    //                    endCall()
+    //                }) 
+    //                currentCall = call;
+    //          }
+            
+    //          }
+
+    //            var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+    //            peer.on('call', function (call) {
+    //                getUserMedia({ video: true, audio: true }, function (stream) {
+    //                    console.log('Received stream1', stream);
+
+    //                    call.answer(stream); 
+    //                    document.querySelector("#live").style.display = "block";
+    //                    call.on('stream', function (remoteStream) {
+    //                        $(".aler2").hide();
+    //            $(".aler").hide();
+
+                          
+    //                        console.log('Received stream2', remoteStream);
+    //                        const video = document.getElementById("remote-video");
+    //                        video.srcObject = remoteStream;
+    //                        video.onloadedmetadata = () => {
+    //                            video.play();
+    //                        };
+    //                    });
+    //                })
+    //            }, function (err) {
+    //                console.log('Failed to get local stream', err);
+
+    //            });
+
+
+    //async function callUserr2() {
+    //    callback();
+    //    console.log(puser);
+
+    //    $(".end-btn").show();
+    //    $(".phone-btn").hide();
+    //    $(".camera-btn").hide();
+    //    $(".back-btn").hide();
+    //    $("#end-call").show();
+
+    //    if (puser1 != user1 && cuser1 == true && cuser2 == false) {
+
+    //        //document.getElementById("aler-name2").textContent = g[0].puser1;
+    //        //get the id entered by the user
+
+    //        const peerId = puser;
+
+    //        var stream = await navigator.mediaDevices.getUserMedia({
+    //            video: true,
+    //            audio: true,
+    //        });
+    //        document.getElementById("menu").style.display = "none";
+    //        document.getElementById("live").style.display = "block";
+    //        document.getElementById("local-video").srcObject = stream;
+    //        document.getElementById("local-video").play();
+    //        var call = peer.call(peerId, stream);
+    //        call.on("stream", (stream) => {
+    //            document.getElementById("remote-video").srcObject = stream;
+    //            document.getElementById("remote-video").play();
+    //        });
+    //        call.on("data", (stream) => {
+    //            document.getElementById("#remote-video").srcObject = stream;
+    //        });
+    //        call.on("error", (err) => {
+    //            console.log(err);
+    //        });
+    //        call.on('close', () => {
+    //            endCall()
+    //        })
+    //        currentCall = call;
+    //    }
+
+    //}
+
+    //var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+    //peer.on('call', function (call) {
+    //    getUserMedia({ video: true, audio: true }, function (stream) {
+    //        console.log('Received stream1', stream);
+
+    //        call.answer(stream);
+    //        document.querySelector("#menu").style.display = "none";
+    //        document.querySelector("#live").style.display = "block";
+    //        call.on('stream', function (remoteStream) {
+    //            $(".aler2").hide();
+    //            $(".aler").hide();
+
+
+    //            console.log('Received stream2', remoteStream);
+    //            const video = document.getElementById("remote-video");
+    //            video.srcObject = remoteStream;
+    //            video.onloadedmetadata = () => {
+    //                video.play();
+    //            };
+    //        });
+    //    })
+    //}, function (err) {
+    //    console.log('Failed to get local stream', err);
+
+    //});
+
+
+
+  
+
+      
+        
+        //////////////////////////////
+    //function callback() {
+    //    $.ajax("/home/peerid?userid1=" + user1).done(function (g) {
+    //        puser1 = g[0].puser1;
+    //        puser2 = g[0].puser2;
+    //        cuser1 = g[0].cuser1;
+    //        cuser2 = g[0].cuser2;
+    //        puser = g[0].puser;
+    //    })
+    //}
+    /////////////////////////////////////////////
+  
+    //////////////////////////////////////////////////////////peeerjs
+    $(".end-btn").hide();
+
+    function endcall() {
+        $(".end-btn").hide();
+        //$(".phone-btn").show();
+        $(".camera-btn").show();
+        $(".back-btn").show();
+        $(".mess-box").show();
+        $(".form-box").show();
+        $(".aler").hide();
+        $(".aler2").hide();
+
+        // Go back to the menu
+    
+        document.querySelector("#live").style.display = "none";// If there is no current call, return
+   
+            currentCall.close();
+     
+        currentCall = undefined;
+    }
+
+    ///////////////////////////////////////////
+
+        //////////////////////////////////////////////////////////peervoice
+    //$(".phone-btn").click(function () {
+    //    $(".end-btn").show();
+    //    $(".phone-btn").hide();
+    //    $(".camera-btn").hide();
+    //    $(".back-btn").hide();
+    //    $(".end-btn").hide();
+
+
+     
+      
+
+    //        });
+    /////////////////////////////////////////////////////////////////
+  
+    $(".mess-box").hide();
+    $(".form-box").hide();
+    $(".ut-box").hide();
+    $(".side-box").show();
+
+    $(".back-btn ").click(function(){
+        $(".mess-box").hide();
+        $(".form-box").hide();
+        $(".ut-box").hide();
+        $(".side-box").show();
+    
+    });
+    $(window).on("navigate", function (event, data) {
+        var direction = data.state.direction;
+        if (direction == 'back') {
+            $(".mess-box").hide();
+            $(".form-box").hide();
+            $(".ut-box").hide();
+            $(".side-box").show();
+       
+        }
+        //if (direction == 'forward') {
+        //    // Do something else
+        //}
+    });
+  
+    //////////////////////////////////////////typename
+  function keyptype(user)
+  {
+      
+            $(".box-type").append(
+              
+                '<p class="box-com">درحال تایپ است '+user+'</p>'
+              
+            );
+         
+  }
+     function keydtype(user)
+  {
+     
+            $(".box-type").html('');
+              
+  }
+    /////////////////////////////////////////size me
+    $("#emojionearea").click(function () {
+        $(".mess-box").css({"height":"250px !important"});
+      })
+   ////////////////////////////////////////////////////////////////emoji
+  
+        $("#messageTextBox").emojioneArea({
+
+            pickerPosition: "top"
+
+        });
+    function findType(element) {
+
+        let char = new RegExp("[\u0600-\u06FF]");
+
+        if (char.test(element.value) === true) {
+
+            element.style.direction = "rtl !important"
+
+        }
+
+        else {
+
+            element.style.direction = "ltr !important"
+
+        }
+
+    }
+  ////////////////////////////////////////////////////////////////////
+  
+ //////////////////////////////////////////////////////////////////////
+
+    //document.onmouseleave = function () {
+    //    $.ajax('/home/delp?user=' + user2).done();
+
+    //    window.innerDocClick = false;
+    //}
+
+    //window.onhashchange = function () {
+    //    if (window.innerDocClick) {
+    //        //Your own in-page mechanism triggered the hash change
+    //    } else {
+    //        $.ajax('/home/delp?user=' + user2).done();
+
+    //    }
+    //}
+   ///////////////////////////////////////////////////////////////////
+   
+  if(user2=="")
+  {
+        allperson();
+        function allperson()
+        {
+            $.ajax('/home/personal').done(function (ddd) {
+                $(".side-box").html('');
+             
+        for (var i = 0; i <= ddd.length; i++) {
+               //$("#messageTextBox").hide();   
+               // $("#emojionearea").hide();
+               // $(".form-btn-pic").hide();
+               // $(".form-btn-box").hide();
+               // $(".btnsendvoice").hide();
+                    //if (ddd[i].ip == "") {
+                        $(".side-box").append(
+                            '<div class="mes-pro" >'
+                            +'<img class="mes-pic" src="/picture/profile/' + ddd[i].picturename + '"/>'
+                            +'<p onClick="show(\'' + ddd[i].username + '\')" class="mes-name">' + ddd[i].username + '&nbsp<span class="badge badge-info">' + ddd[i].count + '</span></p>'
+                            +'<span onClick="delperson(\'' + ddd[i].username + '\')" class="mes-name mes-name2">&nbsp&nbsp<i class="fa fa-trash text-danger" aria-hidden="true"></i></span>'
+                            +'</div>'
+                        );
+                    //} else {
+                    //    $(".side-box").append(
+                    //        '<div class="mes-pro" >'
+                    //        + '<img class="mes-pic3" src="/picture/profile/' + ddd[i].picturename + '"/>'
+                    //        + '<p onClick="show(\'' + ddd[i].username + '\')" class="mes-name">' + ddd[i].username + '&nbsp<span class="badge badge-info">' + ddd[i].count + '</span></p>'
+                    //        + '<span onClick="delperson(\'' + ddd[i].username + '\')" class="mes-name mes-name2">&nbsp&nbsp<i class="fa fa-trash text-danger" aria-hidden="true"></i></span>'
+                    //        + '</div>'
+                    //    );
+                    //}
+        }
+    })
+   
+        }
+    }
+ 
+   if(user2!="")
+   {
+       allperson2();
+        function allperson2() {
+            $.ajax('/home/personal').done(function (ddd) {
+                $(".side-box").html('');
+             
+                for (var i = 0; i <= ddd.length; i++) {
+                    //$("#messageTextBox").hide();
+                    //$("#emojionearea").hide();
+                    //$(".form-btn-pic").hide();
+                    //$(".form-btn-box").hide();
+                    //$(".btnsendvoice").hide();
+                    //if(ddd[i].ip=="")
+                    //{
+                    $(".side-box").append(
+                        '<div class="mes-pro" >'
+                        +'<img class="mes-pic" src="/picture/profile/' + ddd[i].picturename + '"/>'
+                        +'<p onClick="show(\'' + ddd[i].username + '\')" class="mes-name">' + ddd[i].username + '&nbsp<span class="badge badge-info">' + ddd[i].count + '</span></p>'
+                        +'<span onClick="delperson(\'' + ddd[i].username + '\')" class="mes-name mes-name2">&nbsp&nbsp<i class="fa fa-trash text-danger" aria-hidden="true"></i></span>'
+                        +'</div>'
+                    );
+                    //}else
+                    //{
+                    //    $(".side-box").append(
+                    //        '<div class="mes-pro" >'
+                    //        + '<img class="mes-pic3" src="/picture/profile/' + ddd[i].picturename + '"/>'
+                    //        + '<p onClick="show(\'' + ddd[i].username + '\')" class="mes-name">' + ddd[i].username + '&nbsp<span class="badge badge-info">' + ddd[i].count + '</span></p>'
+                    //        + '<span onClick="delperson(\'' + ddd[i].username + '\')" class="mes-name mes-name2">&nbsp&nbsp<i class="fa fa-trash text-danger" aria-hidden="true"></i></span>'
+                    //        + '</div>'
+                    //    );
+                    //}
+                }
+            })
+
+        }
+        }
+
+      
+   
+
+    function delperson(user)
+    {
+        $.ajax('/home/delperson?user='+user).done(function(d){
+            if(d.state=="true")
+            {
+                  if(user2=="")
+  {
+                    allperson();
+  }
+   if(user2!="")
+   {
+       allperson2();
+            }
+            }
+        });
+
+    } 
+
+
+
+    if (user2 != "") {
+        $(".side-box").html('');
+        $.ajax('/home/persons?username=' + user).done(function (ddd) {
+        //for (var i = 0; i <= ddd.length; i++) {
+        //    $(".side-box").append(
+        //            '<div class="mes-pro" onClick="show(\'' + ddd[i].username + '\')">'
+        //        + '<img class="mes-pic" src="/picture/profile/' + ddd[i].picturename + '"/>'
+        //            + '<p class="mes-name">' + ddd[i].username + '&nbsp<span class="badge badge-info">' + ddd[i].count + '</span></p>'
+        //            + '<span onClick="delperson(\'' + ddd[i].username + '\')" class="mes-name">&nbsp&nbsp<i class="fa fa-trash text-danger" aria-hidden="true"></i></span>'
+        //            + '</div>'
+        //    );
+        //}
+    })
+        allperson2();
+
+   }
+
+
+
+
+
+   //    function showperson()
+   //{
+   //    if(user==null)
+   //    {
+   //     $(".side-box").html('');
+   //     //setInterval(function () {
+   //     $.ajax('/home/persons?username=' + user).done(function (ddd) {
+   //         for (var i = 0; i <= ddd.length; i++) {
+   //             $(".side-box").append(
+   //                 '<div class="mes-pro" onClick="show(\'' + ddd[i].username + '\')">'
+   //                 + '<img class="mes-pic" src="/picture/profile/' + ddd[i].picturename + '"/>'
+   //                 + '<p class="mes-name">' + ddd[i].username + '&nbsp<span class="badge badge-info">' + ddd[i].count + '</span></p>'
+   //                 + '</div>'
+   //             );
+   //         }
+   //     })
+   //   }
+   //}
+   //function showperson()
+   //{
+   //     $(".side-box").html('');
+   //     //setInterval(function () {
+   //     $.ajax('/home/persons?username=' + user).done(function (ddd) {
+   //         for (var i = 0; i <= ddd.length; i++) {
+   //             $(".side-box").append(
+   //                 '<div class="mes-pro" onClick="show(\'' + ddd[i].username + '\')">'
+   //                 + '<img class="mes-pic" src="/picture/profile/' + ddd[i].picturename + '"/>'
+   //                 + '<p class="mes-name">' + ddd[i].username + '&nbsp<span class="badge badge-info">' + ddd[i].count + '</span></p>'
+   //                 + '</div>'
+   //             );
+   //         }
+   //     })
+   //}
+      if(user2!="")
+   {
+
+        counter(user2);
+            //showperson(user);
+       
+        $('input[id=xTextBox]').val(user2);
+
+        $(".box-pro").html('');
+     
+        $.ajax('/home/message?username=' + user2).done(function (dd) {
+            $(".ut-box").show();
+            $(".side-box").hide();
+
+            $(".mess-box").show();
+            $(".form-box").show();
+        
+            for (var i = 0; i <= dd.length; i++) {
+             
+                if (user2 == dd[i].user) {
+                    $(".box-pro").append(
+                        '<p class="box-com text-white bg-secondary">' + dd[i].text + '</p>'
+
+                    );
+                } else
+                //if(user==dd[i].user)
+                {
+                    $(".box-pro").append(
+                        '<p class="box-com text-white bg-info">' + dd[i].text + '</p>'
+
+                    );
+                }
+
+                $(".mess-box").animate({ scrollTop: $('.mess-box')[0].scrollHeight }, 0);
+
+            };
+
+        })
+   }
+ var pid;
+    function show(username2) {
+       
+      
+        peer.on("open", function (id) {
+
+
+            $.ajax("/home/peerjs?uid1=" + user1 + "&uid2=" + username2 + "&peerid=" + id).done(function (d) {
+                pid = d.peerid;
+
+            });
+
+        });
+    
+        $(".ut-box").show();
+        $(".side-box").hide();
+
+        $(".mess-box").show();
+        $(".form-box").show();
+        $(".end-btn").hide();
+
+        $('input[id=xTextBox]').val(username2);
+       
+    
+        $(".box-pro").html('');
+            $.ajax('/home/message?username=' + username2).done(function (dd) {
+        
+        for (var i = 0; i < dd.length; i++) {
+                //$("#messageTextBox").show();
+                //$("#emojionearea").show();
+                //$(".form-btn-pic").show();
+                //$(".form-btn-box").show();
+                //$(".btnsendvoice").show();
+                if (username2 == dd[i].user) {
+
+                    if(dd[i].text!=null)
+                    {
+            $(".box-pro").append(
+                            '<p class="box-com text-white bg-secondary">' + dd[i].text + '</p><p style="margin-right:15px;">' + dd[i].sendat + '</p>'
+
+            );
+                    }
+                }
+              
+                  if (usermaster == dd[i].user) {
+                    if (dd[i].text != null) {
+                        $(".box-pro").append(
+                            '<p class="box-com text-white bg-info">' + dd[i].text + '</p><p style="margin-right:15px;">' + dd[i].sendat + '</p>'
+
+                        );
+                    }
+                 }
+                  
+                    if(dd[i].vname!=null)
+                    {
+                        $(".box-pro").append(
+                        '<p class="box-com">' + dd[i].user + '</p><p style="margin-right:15px;">' + dd[i].sendat + '</p>'
+                            +'<audio controls style="width: 200px;">'
+                            +'<source src="/media/voice/' + dd[i].vname + '">'
+                            +'</audio>')
+                    }
+                    
+                    else if(dd[i].pname!=null)
+                    {
+                        $(".box-pro").append(
+                        '<p class="box-com">' + dd[i].user + '</p><p style="margin-right:15px;">' + dd[i].sendat + '</p>'
+                            +'<img class="img-com-chat" onclick="openModal()" src="/picture/chat/' + pic + '"/>'
+                            +'<div id ="myModal" class="modal">'
+                            +'<span class="close cursor" onclick="closeModal()">&times;</span>'
+                            +'<img src="/picture/chat/' + pic + '" style="width:100%">'
+                            +'</div>'
+
+
+                        );
+                    }
+                    else if(dd[i].voname!=null)
+                    {
+                    $(".box-pro").append(
+                        '<p class="box-com">' + dd[i].user + '</p><p style="margin-right:15px;">' + dd[i].sendat + '</p>'
+                        +'<video class="img-com-user">'
+                        +'<source src="/picture/chat/' + dd[i].pic + '" type="video/mp4">'
+                        +'</video>'
+                    )
+                    }
+                    else if(dd[i].fname!=null)
+                    {
+                    $(".box-pro").append(
+                        '<p class="box-com">' + name + '</p>'
+                        +'<a class="img-com-chat2" href="/picture/chat/' + pic + '"><i class="fa fa-download" aria-hidden="true"></i>Download Send File' + pic + '</a>'
+
+                    )
+                    }
+                
+          
+                $(".mess-box").animate({ scrollTop: $('.mess-box')[0].scrollHeight }, 0);
+
+
+        };
+     
+    
+
+    })
+        //if (username2 != "") {
+        //    counter(username2);
+        //    allperson2();
+        //    //showperson(user);
+        //}
+
+    }
+ //////////////////////////////////////////////////////////////
+    const peer = new Peer();
+    var currentCall;
+    async function callUser() {
+
+        var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+        var ply = document.getElementById('svideo');
+        ply.src = "";
+        $(".end-btn").show();
+        //$(".phone-btn").hide();
+        $(".camera-btn").hide();
+        $(".back-btn").hide();
+        $(".mess-box").hide();
+        $(".form-box").hide();
+        $("#end-call").show();
+
+          const peerId = document.getElementById("box-com2").innerHTML;
+
+        const stream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: true,
+        });
+        
+            document.getElementById("live").style.display = "block";
+            document.getElementById("local-video").srcObject = stream;
+            document.getElementById("local-video").play();// make the call
+        const call = peer.call(peerId, stream);
+            call.on("stream", (stream) => {
+
+                document.getElementById("remote-video").srcObject = stream;
+                document.getElementById("remote-video").play();
+            });
+            call.on("data", (stream) => {
+            document.getElementById("#remote-video").srcObject = stream;
+            });
+            call.on("error", (err) => {
+                console.log(err);
+            });
+            call.on('close', () => {
+                endCall()
+            })// save the close function
+            currentCall = call;
+           //}
+        
+         }
+     
+      
+                var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+                peer.on('call', function (call) {
+               
+                    getUserMedia({ video: true, audio: true }, function (stream) {
+                        console.log('Received stream1', stream);
+
+                        call.answer(stream); // Answer the call with an A/V stream.
+                        document.querySelector("#live").style.display = "block";
+                        call.on('stream', function (remoteStream) {
+
+                            // Show stream in some video/canvas element.
+                            console.log('Received stream2', remoteStream);
+                            const video = document.getElementById("remote-video");
+                            video.srcObject = remoteStream;
+                            video.onloadedmetadata = () => {
+                                video.play();
+                            };
+                        });
+                    })
+                }, function (err) {
+                    console.log('Failed to get local stream', err);
+
+        });
+    
+ //  /////////////////////////////////////////////////master peer top
+    //async function callUser() {
+
+
+
+
+    //    $(".end-btn").show();
+    //    $(".phone-btn").hide();
+    //    $(".camera-btn").hide();
+    //    $(".back-btn").hide();
+    //    $(".mess-box").hide();
+    //    $(".form-box").hide();
+    //    $("#end-call").show();
+
+    //    const peerId = document.getElementById("box-com2").value;
+
+    //    var stream = await navigator.mediaDevices.getUserMedia({
+    //        video: true,
+    //        audio: true,
+    //    });// switch to the video call and play the camera preview
+
+    //    document.getElementById("live").style.display = "block";
+    //    document.getElementById("local-video").srcObject = stream;
+    //    document.getElementById("local-video").play();// make the call
+    //    var call = peer.call(peerId, stream);
+    //    call.on("stream", (stream) => {
+    //        document.getElementById("remote-video").srcObject = stream;
+    //        document.getElementById("remote-video").play();
+    //    });
+    //    call.on("data", (stream) => {
+    //        document.getElementById("#remote-video").srcObject = stream;
+    //    });
+    //    call.on("error", (err) => {
+    //        console.log(err);
+    //    });
+    //    call.on('close', () => {
+    //        endCall()
+    //    })// save the close function
+    //    currentCall = call;
+    //    //}
+    //    //})
+    //}
+    //var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+    //peer.on('call', function (call) {
+    //    getUserMedia({ video: true, audio: true }, function (stream) {
+
+
+    //        call.answer(stream); // Answer the call with an A/V stream.
+    //        document.querySelector("#live").style.display = "block";
+    //        call.on('stream', function (remoteStream) {
+
+
+    //            // Show stream in some video/canvas element.
+    //            console.log('Received stream2', remoteStream);
+    //            const video = document.getElementById("remote-video");
+    //            video.srcObject = remoteStream;
+    //            video.onloadedmetadata = () => {
+    //                video.play();
+    //            };
+    //        });
+    //    })
+    //}, function (err) {
+    //    console.log('Failed to get local stream', err);
+
+    //});
+    ///////////////////////////////////////////
+    function endcall() {
+        $(".end-btn").hide();
+        //$(".phone-btn").show();
+        $(".camera-btn").show();
+        $(".back-btn").show();
+        $(".mess-box").show();
+        $(".form-box").show();
+       
+        // Go back to the menu
+        document.querySelector("#live").style.display = "none";// If there is no current call, return
+
+            currentCall.close();
+    
+        currentCall = undefined;
+    }
+
+    //////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////
+    function counter(user2){
+    $.ajax('/home/counter?username=' + user2).done(function (dd) {
+     
+            c = dd[0].count;
+       
+        $(".inbox").text(c);
+    })
+    }
+    </script>
+   
+@section Scripts{
+    <script>
+
+ 
+     
+        $(".profile-li").css({ 'background': '#bd9119', 'color': 'white' });
+        $(".inboxmenu").css({ 'background': 'white', 'border': '2px solid #0751a1', 'color': '#0751a1', 'padding': '5px 8px 1px 5px' });
+        $(".inboxmenu2").css({ 'background': 'white', 'color': '#0751a1' });
+        //#0751a1
+        </script>
+
+
+    @*<script src="~/lib/jquery/dist/jquery.js"></script>
+		 <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>*@
+	<link href="~/css/all.css" rel="stylesheet" />
+	<link href="~/css/fontawesome.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+
+    <script src="~/js/all.js"></script>
+    <script src="~/js/fontawesome.js"></script>
+    <script src="~/js/recorder.js"></script>
+    <script src="~/js/app.js"></script>
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+    <script src="~/js/chat.js"></script>
+}
+   

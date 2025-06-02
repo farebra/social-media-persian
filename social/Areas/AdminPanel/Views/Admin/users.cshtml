@@ -1,0 +1,68 @@
+﻿@model IEnumerable<social.Models.Entity.Account>
+@using social.Utilities
+@{
+    ViewData["Title"] = "users";
+    Layout = "~/Areas/AdminPanel/Views/Shared/_Adminmaster.cshtml";
+}
+<div>
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <h4 class="float-right" style="margin-right:30px; text-decoration:underline;">کاربران</h4>
+    <br />
+    <br />
+
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>کد</th>
+                <th>نام کاربری</th>
+                <th>ایمیل</th>
+                <th>حالت کاربر</th>
+                <th>تلفن</th>
+                <th>تاریخ عضویت</th>
+                <th>نوع کاربر</th>
+                <th>حالت</th>
+                <th>حذف</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>@item.accountId</td>
+                <td>@item.username</td>
+                <td>@item.email</td>
+                @if (item.activeUser)
+                {
+                        <td>غیر فعال</td>
+
+                }
+                else
+                {
+                    <td>فعال</td>
+                    
+                }
+                <td>@item.phone</td>
+                <td>@item.registerDate</td>
+                <td>@item.role</td>
+                @if (@item.activeUser)
+                {
+                    <td><a class="btn btn-danger" href="/adminpanel/admin/state/@item.accountId">غیر فعال</a></td>
+
+                }
+                else
+                {
+                        <td><a class="btn btn-success" href="/adminpanel/admin/state/@item.accountId">فعال</a></td>
+
+                }
+                    <td><a class="btn btn-danger" href="/adminpanel/admin/deleteuser/@item.accountId">حذف</a></td>
+            </tr>
+
+            }
+           
+        </tbody>
+    </table>
+</div>

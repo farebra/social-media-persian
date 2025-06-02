@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] -شبکه اجتماعی ایرانلو - hrast </title>
+    <meta name="format-detection" content="telephone=no">
+    <meta name="rating" content="adult" />
+    <meta property="og:title" content="شبکه اجتماعی ایرانلو -hrast">
+    <meta name="description" content=" Email : support@iranlo.ir - شبکه اجتماعی , بلاگ , ویدئو کنفرانس , تماس تصویری ,اشتراک فایل ,چت گروهی و -داستان و اشتراک پست ">
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/resolation.css" />
+    <link rel="stylesheet" href="~/social_webapp.styles.css" />
+    <link href="~/css/all.css" rel="stylesheet" />
+    <link href="~/css/master.css" rel="stylesheet" />
+
+    <link href="~/css/fontawesome.css" rel="stylesheet" />
+
+    <script src="~/js/all.js"></script>
+    <script src="~/js/fontawesome.js"></script>
+    <style>
+        .bd {
+            background: #1a1a1a;
+        }
+
+        body {
+            min-height: 100vh;
+            min-height: fill-available;
+            min-height: -webkit-fill-available;
+        }
+
+        html {
+            height: fill-available;
+            height: -webkit-fill-available;
+        }
+    </style>
+</head>
+<body style="direction:rtl;" class="bd">
+
+    <div class="main-ac">
+        <header>
+            <div class="header-main">
+                <p class="logo">iranlo</p>
+                <img class="logo-pic" src="~/picture/logo/logo.png" />
+
+                <ul class="menu">
+                    @*    <li><a asp-action="profile" asp-controller="home">پروفایل</a></li>
+            <li><a asp-action="posts" asp-controller="home">پست ها</a></li>
+            <li><a asp-action="groups" asp-controller="home">گروه ها</a></li>*@
+                    @*                <li><a asp-action="groups" asp-controller="home">قوانین و مقررات</a></li>
+
+            <li><a asp-action="groups" asp-controller="home">  اپلیکیشن</a></li>
+                    *@ @*<li><a asp-action="" asp-controller="">سوالات</a></li>*@
+
+
+
+                </ul>
+                <span class="guest"><a class="text-white" asp-action="guestt" asp-controller="guest">مهمان / </a></span>
+
+                <span class="login"><a class="text-white" asp-action="login" asp-controller="account">ورود / </a></span>
+                <span class="register"><a class="text-white" asp-action="register" asp-controller="account"> عضویت</a></span>
+
+                @* <span class="login"><a class="text-white" asp-action="login" asp-controller="account">Login / </a></span>
+        <span class="register"><a class="text-white" asp-action="register" asp-controller="account"> Register</a></span>
+                *@
+                @*   <span class="namepro"><a asp-action=" " asp-controller="" asp-area="">farid ebrahimi</a></span>
+        <img class="picpro rounded-circle" src="~/picture/profile/ebi.jpeg" alt="عکس پروفایل" />
+                *@
+
+            </div>
+        </header>
+
+        <div>
+            @Html.Partial("_statisticPartial")
+        </div>
+        <div>@RenderBody()</div>
+        @*    <footer>
+
+            <div class="footer-com">
+            Develop & Design; 2022 - Texonit-iranlo - Email: farebraaa@gmail.com
+            </div>
+            </footer>*@
+    </div>
+    @*  <div class="menu-bottom">
+        <ul class="menu-xs">
+        <a asp-action="groups" asp-controller="home" class="a-menu-b">
+        قوانین  <i class="fa fa-balance-scale" aria-hidden="true"></i>
+        </a>*@
+
+    @*      <div class="line-menu"></div>
+        <a asp-action="groups" asp-controller="home" class="a-menu-b2">
+        اپلیکیشن   <i class="fa fa-window-restore" aria-hidden="true"></i>
+        </a>
+        </ul>
+        </div>*@
+    @*   <span class="menu-bar">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+        </span>
+        <div class="div-menu-xs">
+        <ul class="menu-xs">
+        <li><a asp-action="groups" asp-controller="home">قوانین و مقررات</a></li>
+
+        <li><a asp-action="groups" asp-controller="home">  اپلیکیشن</a></li>
+        </ul>
+        </div>*@
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+
+<script>
+    //$(window).bind('beforeunload', function () {
+    //    $.ajax("/account/logout").done(function () { });
+    //});
+    var i = 2;
+    $(".menu-bar").click(function () {
+        if (i % 2 == 0) {
+            $(".div-menu-xs").css({ 'display': 'block' });
+            i++;
+        }
+        else {
+            $(".div-menu-xs").css({ 'display': 'none' });
+            i++;
+        }
+    })
+    $(".main-ac").click(function () {
+        $(".div-menu-xs").css({ 'display': 'none' });
+
+    })
+</script>

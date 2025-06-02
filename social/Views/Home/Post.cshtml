@@ -1,0 +1,415 @@
+﻿@inject social.Models.Contextsocial db
+
+@model social.Models.ViewModel.Profile
+
+@{
+	ViewData["Title"] = "Post";
+	Layout = "~/Views/Shared/_Layoutpro.cshtml";
+	
+}
+<style>
+	/*.div-post-main {
+		width: 100%;
+		position: absolute;
+		background: #69c1fb;
+	}
+
+	.div-post-top {
+		width: 100%;
+		position: absolute;
+		background: #69c1fb;
+		height: 180px;
+	}
+
+	.div-post-top-right {
+		width: 15%;
+		float: right;
+		height: 180px;
+	}
+
+	.div-post-top-center {
+		width: 70%;
+		float: right;
+		background: white;
+		height: 180px;
+		border-bottom: 4px solid #69c1fb;
+		border-radius: 100px;
+	}
+
+	.div-post-top-left {
+		width: 15%;
+		float: right;
+		height: 180px;
+	}
+
+	.div-post-bottom {
+		width: 100%;
+		position: absolute;
+		background: white;
+		top: 180px;
+		height: 350px;
+		overflow-x:hidden;
+		overflow-y:auto;
+	}
+
+	.prof-div {
+		position:absolute;
+		width:100%;
+	}
+
+	.prof-right {
+		width: 60%;
+		float: right;
+		height: 180px;
+	}
+
+	.prof-pic {
+		width:180px;
+		height:180px;
+		border-radius:50%;
+		position:absolute;
+		right:0;
+		top:0;
+		border: 8px solid #69c1fb;
+	}
+
+	.prof-name {
+		position: absolute;
+		right: 24%;
+		top: 70px;
+		font-size:22px;
+		font-weight:bold;
+		color: dimgray;
+		border-right: 2px solid dimgray;
+		border-left: 2px solid dimgray;
+		padding:5px;
+	}
+
+
+	.prof-left {
+		width: 40%;
+		float: right;
+		height: 180px;
+		border-left: 3px solid white;
+	}
+
+	.prof-follower {
+		width:17%;
+		height: 33px;
+		font-size: 18px;
+		font-weight: bold;
+		color:darkgreen;
+		position:absolute;
+		top:40px;
+			right: 45%;
+		border:3px solid darkgreen;
+		text-align: center;
+		cursor: pointer;
+	}
+	.prof-follower2 {
+		width:17%;
+		height: 6px;
+		font-size: 18px;
+		font-weight: bold;
+		color:#0751a1;
+		position:absolute;
+		top:6px;
+			right: 45%;
+		border:3px solid #0751a1;
+		text-align: center;
+		cursor: pointer;
+	}*/
+	/*.prof-send {
+		width: 17%;
+		height: 33px;
+		font-size: 18px;
+		font-weight: bold;
+		color:goldenrod;
+		position: absolute;
+		top: 75px;
+		right: 45%;
+		border: 3px solid goldenrod;
+		text-align:center;
+		cursor: pointer;
+	}
+
+	.prof-ignore {
+		width: 17%;
+		height: 33px;
+		font-size: 18px;
+		font-weight: bold;
+		color: red;
+		position: absolute;
+		top: 110px;
+		right: 45%;
+		border: 3px solid red;
+		text-align: center;
+	cursor:pointer;
+	}
+*/
+	/*.follower-post-p{
+		position:absolute;
+		right:3%;
+		top:30px;
+		font-size:19px;
+		font-weight:bold;
+	}
+
+	.follower-post-count{
+			position:absolute;
+		right:3%;
+		top:55px;
+		font-size:17px;
+		font-weight:bold;
+	}
+
+	.following-post-p{
+		position:absolute;
+		left:3%;
+		top:30px;
+		font-size:19px;
+		font-weight:bold;
+	}
+
+	.following-post-count{
+		position:absolute;
+		left:3%;
+		top:55px;
+		font-size:17px;
+		font-weight:bold;
+	}
+*/
+	/*.post-pic-click{
+		height:180px;
+		width:180px;
+		border:2px solid gray;
+		float:left;
+		cursor:pointer;
+	}
+*/
+	/*.img-com-user{
+		height: 180px;
+		width: 180px;
+	}
+	.p-priv{
+		position:absolute;
+		top:100px;
+		right:31%;
+		font-weight:bold;
+		font-size:22px;
+		color:gray;
+	}*/
+</style>
+@{
+	var user = db.Accounts.SingleOrDefault(r => r.username==User.Identity.Name);
+	var user2 = db.Accounts.SingleOrDefault(r => r.username == Model.username);
+
+	//var following = db.AccountJoins.Where(w => w.following == true&& w.accountId==user.accountId).Count();
+	//var follower = db.AccountJoins.Where(a => a.follower == true && a.accountId == user.accountId).Count();
+	//var followingt = db.AccountJoins.Where(w => w.follower == true && (w.accountId2 == user.accountId || w.accountId == user.accountId)).Any();
+
+}
+<div class="div-post-main">
+	<div class="div-post-top div-post-top2">
+		<div class="div-post-top-right">
+			<p class="follower-post-p">دنبال کننده</p>
+			<p class="follower-post-count">@Model.follower.ToString()</p>
+
+
+		</div>
+		<div class="div-post-top-center">
+			<div class="prof-div">
+
+				<img class="prof-pic rounded-circle" src="~/picture/profile/@Model.picturename" alt="عکس پروفایل" />
+
+					<p class="prof-name">@Model.username</p>
+				
+				
+					@if (Model.followingt2 == true)
+					{
+					<p class="prof-follower" onclick="followercl('@Model.username');">
+						<i class="fa fa-remove"></i>
+						حذف
+
+					</p>
+					}
+
+				else if (Model.followingb == true)
+					{
+					<p class="prof-follower2" onclick="follower('@Model.username');">
+						<i class="fa fa-plus" aria-hidden="true"></i>
+						پیوند
+					</p>
+					<p class="prof-follower" onclick="followercl('@Model.username');">
+						<i class="fa fa-remove"></i>
+						حذف
+
+					</p>
+					}
+					else if(Model.followingb==true)
+					{
+						<p class="prof-follower" onclick="followercl('@Model.username');">
+							<i class="fa fa-remove"></i>
+							حذف
+
+						</p>
+					}
+							else if (Model.followingt == true)
+					{
+						<p class="prof-follower" onclick="followercl('@Model.username');">
+							<i class="fa fa-remove"></i>
+							حذف
+
+						</p>
+					}
+				else if (Model.access == true)
+					{
+					<p class="prof-follower2">
+						@*<i class="fa fa-plus" aria-hidden="true"></i>*@
+						بررسی
+					</p>
+					<p class="prof-follower" onclick="followercl('@Model.username');">
+						<i class="fa fa-remove"></i>
+						حذف
+
+					</p>
+					}
+					else 
+					{
+						<p class="prof-follower" onclick="follower('@Model.username');">
+							<i class="fa fa-plus" aria-hidden="true"></i>
+							دنبال کننده
+						</p>
+					}
+					<p class="prof-send" onclick="send('@Model.username')">
+						<i class="fa fa-paper-plane" aria-hidden="true"></i>
+						ارسال پیام
+					</p>
+					<p class="prof-ignore" onclick="ignore('@Model.username')">
+						<i class="fa fa-ban" aria-hidden="true"></i>
+						بلوک
+					</p>
+
+
+				
+			</div>
+		</div>
+		<div class="div-post-top-left">
+			<p class="following-post-p">دنبال شونده</p>
+			<p class="following-post-count">@Model.following.ToString()</p>
+		</div>
+	</div>
+	
+	
+	<div class="div-post-bottom div-post-bottom2">
+	@*	@foreach(var i in post)
+		{*@
+			
+			@*if(Model.postMs.SingleOrDefault(d=>d.pic==name)!=null)
+			{*@
+				
+		
+		
+		
+	</div>
+</div>
+@*<input type="hidden" id="userprof" value="@ViewBag.user" />*@
+				<script>
+	//var user = $("#userprof").val();
+
+	//////////////////////////////////////postshow
+	//
+	//	bool post = db.PostMs.Where(s => s.accountId == Model.accountId).Any();
+	//}
+	//if('post'==true)
+	//{
+	$.ajax('/home/postsjson?accid='+@Model.accountId).done(function(dd){
+	
+				if(dd.state!="true")
+		{
+		for(var i=0;i<=dd.length;i++)
+		{
+			if(dd[i].prefix!="video/mp4"){
+
+			
+		$('.div-post-bottom').append(
+				'<div onClick="showp(\'' +  dd[i].pic + '\');" class="post-pic-click">'
+		+'<img class="img-com-user" src="/picture/post/'+dd[i].pic+'"/>'
+		+'</div>'
+		)
+			}
+				if (dd[i].prefix == "video/mp4") {
+					
+	$('.div-post-bottom').append(
+				'<div onClick="showp(\'' +  dd[i].pic + '\');" class="post-pic-click">'
+								+ '<viddeo class="img-com-user">'
+							+'<source src="/picture/post/'+dd[i].pic+'" type="viddeo/mp4">'
+							+'</video>'
+		+'</div>'
+		)
+
+				}
+		}
+		}
+			
+			if (dd.state == "true") {
+				$('.div-post-bottom').append(
+					'<p class="p-priv">اکانت شخصی</p>'
+					+ '</div>'
+					)
+		}
+	})
+	
+	var vids = $(".img-com-user");
+	$.each(vids, function () {
+		this.controls = false;
+	});
+	////////////////////////////////////////////
+	function followercl(user) {
+		$.ajax('/home/nofollower?username=' + user).done(function(d){
+
+			if(d.state=="true")
+			{
+				var url = "https://iranlo.ir/home/profile";
+		$(location).attr('href', url)
+			}
+		});
+		
+	}
+	function follower(user)
+	{
+		$.ajax('/home/addlinks?username=' + user).done(function(dddd){
+			if(dddd.state=="true")
+			{
+	var url = "https://iranlo.ir/home/following";
+		$(location).attr('href', url);
+			}
+			});
+		
+	
+	}
+	function send(user) {
+		$.ajax('/home/persons?username=' + user).done(function(d){
+			if(d.state=="true")
+			{
+	var url = "https://iranlo.ir/home/inbox?username=" + user;
+			$(location).attr('href', url);
+			}
+
+		});
+
+	
+			//$.post('/home/links?usernamhttps://localhost:44312e=' + user).done();
+		
+	}
+	function ignore(user) {
+		$.ajax('home/ignorejson?username=' + user).done();
+		var url = "https://iranlo.ir/home/ignore";
+		$(location).attr('href', url);
+	}
+	function showp(picname) {
+		alert();
+		var url = 'https://iranlo.ir/home/showpost?accountId=' + @Model.accountId + '&name=' + picname;
+		$(location).attr('href', url);
+	}
+				</script>

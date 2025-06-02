@@ -1,0 +1,117 @@
+﻿@inject social.Models.Contextsocial db
+@model IList<social.Models.Entity.Group>
+@{
+    ViewData["Title"] = "mygroup";
+    Layout = "~/Views/Shared/_Layoutpro.cshtml";
+}
+
+
+
+<style>
+  
+    
+</style>
+<div class="div-search2">
+    <labe class="text-search">گروه های من</labe>
+</div>
+<div class="div-main-groups">
+   
+        @foreach(var i in Model)
+        {
+        var pass = db.Groups.Where(s => s.groupId == i.groupId).SingleOrDefault();
+        var userid = db.Accounts.SingleOrDefault(p => p.username == User.Identity.Name).accountId;
+         
+            var regisusergroupmanager = db.Groups.Where(o => o.managerId == userid).Any();
+        
+                                                <div class="div-group-form">
+                                               
+                                                    <p class="name-groups">@i.name</p>
+
+                                                    <p class="subject-groups">@i.subject</p>
+                                                      @*      @if(regisusergroup==false)
+                                                            {
+                                                    <button onclick="joingroup('@User.Identity.Name')" class="btn btn-warning btn-sm btn-join-groups">ملحق شدن</button>
+                                                            }*@
+            @if (regisusergroupmanager == false &&pass.password==null)
+            {
+            <form asp-action="groups1" method="post">
+                @*<input type="password" id="pass" name="pass" class="groups-pass" placeholder="کلمه عبور" />*@
+                <input type="submit" class="btn btn-success btn-sm btn-wellcome-groups" value="ورود">
+
+                <input type="hidden" value="@i.groupId" id="gid" class="gid" name="gid" />
+                <button onclick="exitgroup('@i.groupId')" class="btn btn-danger btn-sm btn-exit-groups">خروج</button>
+            </form>
+            }
+           @if (regisusergroupmanager == false && pass.password != null)
+                                                        {
+                                                            <form asp-action="groups1" method="post">
+                                                  <input type="password" id="pass" name="pass" class="groups-pass" placeholder="کلمه عبور"/>
+                                             <input type="submit" class="btn btn-success btn-sm btn-wellcome-groups" value="ورود">
+
+                                                  <input type="hidden" value="@i.groupId" id="gid" class="gid" name="gid"/>
+                                                              <button onclick="exitgroup('@i.groupId')" class="btn btn-danger btn-sm btn-exit-groups">خروج</button>
+                                                              </form>
+                                                        }
+         
+                                                        @if(regisusergroupmanager==true)
+                                                        {
+                                                            <form asp-action="groups2" method="post">
+                                                  <input type="password" id="pass" name="pass" class="groups-pass" placeholder="کلمه عبور"/>
+                                             <input type="submit" class="btn btn-success btn-sm btn-wellcome-groups" value="ورود">
+
+                                                  <input type="hidden" value="@i.groupId" id="gid" class="gid" name="gid"/>
+                                                    <button onclick="deletegroup('@User.Identity.Name')" class="btn btn-danger btn-sm btn-exit-groups">حذف</button>
+                                                       </form>
+                                                    }
+                                                </div>
+    }
+</div>
+@*<div class="div-groups-pass">
+    <input type="text" id="pass" class="groups-pass" />
+    <button class="btn btn-sm btn-success btnpass">ورود</button>
+</div>*@
+<script>
+    $(".div-groups-pass").hide();
+    
+    function joingroup(user)
+    {
+
+    }
+    //var pass="";
+    //function welcomegroup(gid) {
+    //    $(".div-groups-pass").show();
+    //    $(".btnpass").click(function(){
+    //        pass = $("#pass").val();
+    //        $.post('/home/groups?pass=' + pass + '&gid=' + gid).done(function(d){
+
+    //            $(".div-groups-pass").hide();
+
+    //        });
+
+      
+    //    })
+      
+    //}
+    function exitgroup(group) {
+        $.post('/home/exitgroup?group=' + group).done(function (d) {
+
+            if (d.state = "true") {
+                var url = "https://iranlo.ir/home/groups";
+                $(location).attr('href', url)
+            }
+
+        });
+    }
+    function deletegroup(user) {
+        $.post('/home/delgroup?username=' + user).done(function (d) {
+
+            if (d.state = "true") {
+                var url = "https://iranlo.ir/home/mygroup";
+                $(location).attr('href', url)
+            }
+
+        });
+    }
+    
+</script>
+

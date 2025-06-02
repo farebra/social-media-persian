@@ -1,0 +1,36 @@
+﻿@model social.Models.Entity.Group
+
+@{
+    ViewData["Title"] = "Addgroup";
+    Layout = "~/Views/Shared/_Layoutpro.cshtml";
+}
+<style>
+ 
+</style>
+<div class="div-search">
+    <label class="text-search">افزودن گروه</label>
+</div>
+<div class="div-main-group">
+    
+        <form asp-action="Addgroup" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+           
+           
+         
+             <input asp-for="name" class="namegroup" placeholder="نام"/>
+                <span asp-validation-for="name" class="text-danger"></span>
+          
+             <textarea asp-for="subject" class="subjectgroup" placeholder="موضوع"></textarea>
+                <span asp-validation-for="subject" class="text-danger"></span>
+           
+            
+             <input asp-for="password" class="passgroup" placeholder="کلمه عبور "/>
+                <span asp-validation-for="password" class="text-danger"></span>
+           
+          
+                <input type="submit" value="ایجاد " class="btn btn-primary btn-add-group" />
+        </form>
+    </div>
+
+
+

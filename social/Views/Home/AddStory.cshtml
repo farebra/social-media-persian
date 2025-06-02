@@ -1,0 +1,195 @@
+﻿@{
+    ViewData["Title"] = "AddStory";
+    Layout = "~/Views/Shared/_Layoutpro.cshtml";
+}
+
+@model social.Models.Entity.Story
+<link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
+<script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<style>
+    .ui-widget-header {
+        background: #cedc98;
+        border: 1px solid #DDDDDD;
+        color: #333333;
+        font-weight: bold;
+    }
+
+    .progress-label {
+        position: absolute;
+        left: 50%;
+        top: 113px;
+        font-weight: bold;
+        text-shadow: 1px 1px 0 #fff;
+    }
+
+    .red {
+        color: red;
+    }
+</style>
+<div class="div-search">
+    <labe class="text-search2">افزودن داستان</labe>
+</div>
+
+
+@*<form asp-action="addstory" asp-controller="home" method="post" enctype="multipart/form-data">*@
+    <div>
+
+        <div class="div-up-stroy">
+            <div class="div-btn-story">
+
+                <label class="lbl-story">
+              آپلود عکس و ویدئو
+                    <input name="storyimg" accept="video/*,image/*" type="file" id="storyimg" class="storyimg" style="visibility:hidden" />
+
+            </label>
+
+                <div class="c-count-div"><p class="p-c-count"></p></div>
+
+                <input type="button" value="افزودن دیگر" class="btn-s-add" />
+
+                <input type="submit" value="ایجاد داستان" class="btn-s-insert" />
+
+            </div>
+
+        </div>
+        @*    <div class="div-up-text">
+        <textarea class="text-story" asp-for="textAll" placeholder="متن پست را تایپ کنید"></textarea>
+
+        <div class="div-btn-story">
+        <input type="button" value=" افزودن مجدد " class="btn-s-insert" />
+        <input type="submit" value="ایجاد داستان" class="btn-s-add" />
+
+        </div>
+        </div>*@
+    </div>
+    <div id="progressbar-5">
+        <div class="progress-label">
+        </div>
+    </div>
+@*</form>*@
+<script>
+    //var loadFile2 = function (event) {
+    //    var output = document.getElementById('story-pic');
+    //    output.src = URL.createObjectURL(event.target.files[0]);
+    //    output.onload = function () {
+    //        URL.revokeObjectURL(output.src) // free memory
+    //    }
+    //};
+        var o = 1;
+
+    $("document").ready(function () {
+        $(".div-up-text").hide();
+        $(".p-c-count").html(o);
+    })
+   
+
+    $(".btn-s-add").click(function () {
+        //$(".div-up-img").hide();
+        //$(".div-up-text").show();
+        var file_data = $("#storyimg").prop("files")[0]; // Getting the properties of file from file field
+        var form_data = new FormData(); // Creating object of FormData class
+        form_data.append("file", file_data) // Appending parameter named file with properties of file_field to form_data
+        $.ajax({
+            url: "/home/storyadd", // Upload Script
+            dataType: 'script',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form_data, // Setting the data attribute of ajax with file_data
+            type: 'post',
+            success: function (data) {
+              //  var json = JSON.parse(data);
+                LoadProgressBar(data);
+              //var pic= json["picname"]);
+              o++;
+        $(".p-c-count").html(o);
+            }
+        });
+    })
+    $(".btn-s-insert").click(function () {
+        //$(".div-up-img").show();
+        //$(".div-up-text").hide();
+        var file_data = $("#storyimg").prop("files")[0]; // Getting the properties of file from file field
+        var form_data = new FormData(); // Creating object of FormData class
+        form_data.append("file", file_data) // Appending parameter named file with properties of file_field to form_data
+        $.ajax({
+            url: "/home/storyinsert", // Upload Script
+            dataType: 'script',
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form_data, // Setting the data attribute of ajax with file_data
+            type: 'post',
+            success: function (data) {
+                //var json = JSON.parse(data);
+                LoadProgressBar2(data);
+                //var pic = json["picname"]);
+                var url = "https://iranlo.ir/home/profile";
+                $(location).attr('href', url);
+            }
+        });
+            
+    })
+            /////////////////////////////progressbar
+    function LoadProgressBar(result) {
+        var progressbar = $("#progressbar-5");
+        var progressLabel = $(".progress-label");
+        progressbar.show();
+        $("#progressbar-5").progressbar({
+            //value: false,
+            change: function () {
+                progressLabel.text(
+                    progressbar.progressbar("value") + "%");  // Showing the progress increment value in progress bar
+            },
+            complete: function () {
+                progressLabel.text("Loading Completed!");
+                progressbar.progressbar("value", 0);  //Reinitialize the progress bar value 0
+                progressLabel.text("");
+                progressbar.hide(); //Hiding the progress bar
+                var markup = "<tr><td>" + result + "</td><td><a href='#' onclick='DeleteFile(\"" + result + "\")'><span class='glyphicon glyphicon-remove red'></span></a></td></tr>"; // Binding the file name
+                $("#ListofFiles tbody").append(markup);
+                $('#storyimg').val('');
+                //$('#FileBrowse').find("*").prop("disabled", false);
+            }
+        });
+        function progress() {
+            var val = progressbar.progressbar("value") || 0;
+            progressbar.progressbar("value", val + 1);
+            if (val < 99) {
+                setTimeout(progress, 25);
+            }
+        }
+        setTimeout(progress, 100);
+    }
+    ///////////////////////
+    function LoadProgressBar2(result) {
+        var progressbar = $("#progressbar-5");
+        var progressLabel = $(".progress-label");
+        progressbar.show();
+        $("#progressbar-5").progressbar({
+            //value: false,
+            change: function () {
+                progressLabel.text(
+                    progressbar.progressbar("value") + "%");  // Showing the progress increment value in progress bar
+            },
+            complete: function () {
+                progressLabel.text("Loading Completed!");
+                progressbar.progressbar("value", 0);  //Reinitialize the progress bar value 0
+                progressLabel.text("");
+                progressbar.hide(); //Hiding the progress bar
+                var markup = "<tr><td>" + result + "</td><td><a href='#' onclick='DeleteFile(\"" + result + "\")'><span class='glyphicon glyphicon-remove red'></span></a></td></tr>"; // Binding the file name
+                $("#ListofFiles tbody").append(markup);
+                $('#storyimg').val('');
+                //$('#FileBrowse').find("*").prop("disabled", false);
+            }
+        });
+        function progress() {
+            var val = progressbar.progressbar("value") || 0;
+            progressbar.progressbar("value", val + 1);
+            if (val < 99) {
+                setTimeout(progress, 25);
+            }
+        }
+        setTimeout(progress, 100);
+    }
+</script>

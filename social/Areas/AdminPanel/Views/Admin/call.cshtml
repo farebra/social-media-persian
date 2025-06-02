@@ -1,0 +1,44 @@
+﻿@model IEnumerable<social.Models.Entity.callus>
+@using social.Utilities
+@{
+    ViewData["Title"] = "call";
+    Layout = "~/Areas/AdminPanel/Views/Shared/_Adminmaster.cshtml";
+}
+<div>
+    <br />
+    <br />
+    <br />
+    <br />
+
+    <h4 class="float-right" style="margin-right:30px; text-decoration:underline;">کاربران</h4>
+    <br />
+    <br />
+
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>کد</th>
+                <th>ایمیل</th>
+                <th>متن</th>
+                <th>تاریخ </th>
+                <th>حذف</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>@item.callusId</td>
+                <td>@item.Email</td>
+                <td>@item.message</td>
+
+              
+                <td>@item.time</td>
+     <td><a class="btn btn-danger" href="/adminpanel/admin/deletecall/@item.callusId">حذف</a></td>
+            </tr>
+
+            }
+           
+        </tbody>
+    </table>
+</div>

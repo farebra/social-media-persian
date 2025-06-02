@@ -1,0 +1,57 @@
+﻿@model social.Models.Entity.Account
+
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_LayoutAc.cshtml";
+}
+
+<div class="regis-div3">
+    <form asp-action="register" class="form-register" method="post" enctype="multipart/form-data">
+        <p class="regis-text2">ثبت نام کاربر</p>
+            <img class="regis-pic" id="regis-pic2" src="~/picture/profile/prof.png" />
+            <label class="lbl-up btn btn-success">
+                آپلود عکس
+            <input accept="image/*" onchange="loadFile22(event)" name="proimg" type="file" id="proimg" class="regisfile" style="visibility:hidden" />
+
+            </label>
+    
+        <input class="regis-email2" id="email2" asp-for="email" type="email" placeholder="ایمیل" />
+
+        <input class="regis-user2" id="user2" asp-for="username" type="text" placeholder="نام کاربری" />
+        <input class="regis-pass2" id="pass2" asp-for="password" type="password" placeholder="کلمه عبور" />
+      
+        <input type="submit" value="ثبت نام " class="regis-btn2" />
+    </form>
+</div>
+<h5 class="usernull">@ViewBag.usernull</h5>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+
+<script>
+    var loadFile22 = function (event) {
+        var output = document.getElementById('regis-pic2');
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function () {
+            URL.revokeObjectURL(output.src) // free memory
+        }
+    };
+      $(".form-register").submit(function (e) {
+        if ($("#email2").val() == "" || $("#phone2").val() == "" || $("#user2").val() == "" || $("#pass2").val() == "") {
+            e.preventDefault();
+            $(".usernull").html("اطلاعات ثبت نام را وارد کنید");
+            return false;
+        }
+          $("#proimg").change(function () {
+              var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
+              if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+                  /*  alert("فرمت های قابل استفاده : " + fileExtension.join(', '));*/
+                  $(".lbl-up").css({ 'color': 'white', 'background': 'red' });
+                  $("#proimg").val('');
+
+              }
+
+
+          });
+   
+
+</script>

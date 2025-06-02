@@ -1,0 +1,368 @@
+﻿@inject social.Models.Contextsocial db
+@model social.Models.Entity.People
+@{
+    ViewData["Title"] = "ShowGroup";
+    Layout = "~/Views/Shared/_Layoutpro.cshtml";
+  
+}
+
+
+
+<style>
+
+</style>
+
+<div class="main-box2">
+    <div class="side-box2">
+
+
+        @*foreach (var i in people)
+        {
+        <div class="mes-pro2" onClick="show(@i.username)">
+
+        <img class="mes-pic2" src="picture/profile/@i.picturename" />
+        <p class="mes-name3">@i.username &nbsp<span class="badge badge-info">@i.count</span></p>'
+
+
+        </div>
+        }*@
+
+    </div>
+    <div class="mess-box2">
+        <div class="box-pro">
+        </div>
+
+    </div>
+    <div class="form-box2">
+        <form id="chatForm">
+            <textarea type="text" id="messageTextBox" class="form-tarea" onkeyup="findType(this)"></textarea>
+            <input type="hidden" id="rTextBox" value="@User.Identity.Name" />
+
+            <input type="hidden" id="groupid" value="@ViewBag.groupid" />
+
+            <button type="submit" class="form-btn-box"><i class="fa">&#xf1d9;</i></button>
+        </form>
+
+
+        <label class="form-btn-pic">
+            <i class="fa fa-upload" aria-hidden="true"></i>
+
+            <input type="file" accept="audio/*,video/*,.xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf,.zip,.rar,.7zip" class="file" id="file2" name="file" style="visibility:hidden" />
+
+        </label>
+        <p class="btnsendvoice" id="btnsendvoice">
+            <i class="fa fa-microphone" aria-hidden="true"></i>
+        </p>
+
+
+    </div>
+</div>
+<script>
+    $.ajax('/home/message2?gid=' + '@ViewBag.groupid').done(function (dd) {
+        for (var i = 0; i <= dd.length; i++) {
+            //console.log(dd.length);
+
+
+
+            if (dd[i].vname != null) {
+                $(".box-pro").append(
+                    '<p class="box-com">' + dd[i].user + '</p><p style="margin-right:15px;">' + dd[i].sendat + '</p>'
+                    + '<audio controls style="width: 200px;">'
+                    + '<source src="/media/voice/' + dd[i].vname + '">'
+                    + '</audio>')
+            }
+
+            else if (dd[i].pname != null) {
+                $(".box-pro").append(
+                    '<p class="box-com">' + dd[i].user + '</p><p style="margin-right:15px;">' + dd[i].sendat + '</p>'
+                    + '<img class="img-com-chat" onclick="openModal()" src="/picture/chat/' + pic + '"/>'
+                    + '<div id ="myModal" class="modal">'
+                    + '<span class="close cursor" onclick="closeModal()">&times;</span>'
+                    + '<img src="/picture/chat/' + pic + '" style="width:100%">'
+                    + '</div>'
+
+
+                );
+            }
+            else if (dd[i].voname != null) {
+                $(".box-pro").append(
+                    '<p class="box-com">' + dd[i].user + '</p><p style="margin-right:15px;">' + dd[i].sendat + '</p>'
+                    + '<video class="img-com-user">'
+                    + '<source src="/picture/chat/' + dd[i].pic + '" type="video/mp4">'
+                    + '</video>'
+                )
+            }
+            else {
+                $(".box-pro").append(
+                    '<p class="box-com">' + dd[i].user + '</p><p style="margin-right:15px;">' + dd[i].sendat + '</p>'
+                    + '<p class="box-com text-white bg-secondary">' + dd[i].text + '</p>'
+
+                );
+            }
+
+            $(".mess-box").animate({ scrollTop: $('.mess-box')[0].scrollHeight }, 0);
+
+
+
+
+
+
+        }
+    })
+
+    ////////////////////////////////////////////////////////////////emoji
+
+    $("#messageTextBox").emojioneArea({
+
+        pickerPosition: "top"
+
+    });
+    function findType(element) {
+
+        let char = new RegExp("[\u0600-\u06FF]");
+
+        if (char.test(element.value) === true) {
+
+            element.style.direction = "rtl !important"
+
+        }
+
+        else {
+
+            element.style.direction = "ltr !important"
+
+        }
+
+    }
+
+    //////////////////////////////////////////////////////////////////////
+
+
+    pl();
+    function pl(){
+
+    $.ajax('/home/peopleall?groupId='+@Model.gropId).done(function (ddd) {
+        $(".side-box2").html('');
+        for (var i = 0; i <= ddd.length; i++) {
+         if(ddd[i].ip=="")
+         {
+                    if (ddd[i].master == "true") {
+                        $(".side-box2").append(
+
+                            '<div class="mes-pro2" onClick="show(\'' + ddd[i].username + '\')">'
+                            + '<img class="mes-pic2" src="/picture/profile/' + ddd[i].picturename + '"/>'
+                            + '<p class="mes-name3">' + ddd[i].username + '</p>'
+                            + '<span onClick="delperson(\'' + ddd[i].username + '\')" class="mes-name3">&nbsp&nbsp<i class="fa fa-trash text-danger" aria-hidden="true"></i></span>'
+                            + '</div>'
+                        );
+                    } else {
+                        $(".side-box2").append(
+
+                            '<div class="mes-pro2" onClick="show(\'' + ddd[i].username + '\')">'
+                            + '<img class="mes-pic2" src="/picture/profile/' + ddd[i].picturename + '"/>'
+                            + '<p class="mes-name3">' + ddd[i].username + '</p>'
+                            + '</div>'
+                        );
+                     }
+           }
+           else{
+                    if (ddd[i].master == "true") {
+                        $(".side-box2").append(
+
+                            '<div class="mes-pro2" onClick="show(\'' + ddd[i].username + '\')">'
+                            + '<img class="mes-pic4" src="/picture/profile/' + ddd[i].picturename + '"/>'
+                            + '<p class="mes-name3">' + ddd[i].username + '</p>'
+                            + '<span onClick="delperson(\'' + ddd[i].username + '\')" class="mes-name3">&nbsp&nbsp<i class="fa fa-trash text-danger" aria-hidden="true"></i></span>'
+                            + '</div>'
+                        );
+                    } else {
+                        $(".side-box2").append(
+
+                            '<div class="mes-pro2" onClick="show(\'' + ddd[i].username + '\')">'
+                            + '<img class="mes-pic4" src="/picture/profile/' + ddd[i].picturename + '"/>'
+                            + '<p class="mes-name3">' + ddd[i].username + '</p>'
+                            + '</div>'
+                        );
+                    }
+           }
+        }
+    })
+    }
+
+    function delperson(user)
+    {
+        $.ajax('/home/delpeople?user=' + user).done(function(f){
+            if(f.state="true")
+            {
+                pl();
+
+            }
+        });
+    }
+    function show(user)
+    {
+            var url = "https://iranlo.ir/home/profile?username=" + user;
+            $(location).attr('href', url);
+            //$.post('/home/links?username=' + user).done();
+    }
+</script>
+@*<input type="hidden" id="rTextBox" value="@User.Identity.Name" />*@
+<script>
+
+    /////////////////////////////////////////input checker
+
+
+    ////////////////////////////////////////////////////////////////
+    var user2 = $("#xTextBox").val();
+    var usermaster
+    if (user2 == "") {
+        allperson();
+        function allperson() {
+            $.ajax('/home/peopleall?groupId='+'@Model.gropId').done(function (ddd) {
+                $(".side-box2").html('');
+                for (var i = 0; i <= ddd.length; i++) {
+                    if(ddd[i].ip=="")
+                    {
+                        $(".side-box2").append(
+                            '<div class="mes-pro2" onClick="show(\'' + ddd[i].username + '\')">'
+                            + '<img class="mes-pic2" src="/picture/profile/' + ddd[i].picturename + '"/>'
+                            + '<p class="mes-name3">' + ddd[i].username + '</p>'
+                            + '<span onClick="delperson(\'' + ddd[i].username + '\')" class="mes-name3">&nbsp&nbsp<i class="fa fa-trash text-danger" aria-hidden="true"></i></span>'
+                            + '</div>'
+                        );
+                    }
+                    else
+                    {
+                        $(".side-box2").append(
+                            '<div class="mes-pro2" onClick="show(\'' + ddd[i].username + '\')">'
+                            + '<img class="mes-pic4" src="/picture/profile/' + ddd[i].picturename + '"/>'
+                            + '<p class="mes-name3">' + ddd[i].username + '</p>'
+                            + '<span onClick="delperson(\'' + ddd[i].username + '\')" class="mes-name3">&nbsp&nbsp<i class="fa fa-trash text-danger" aria-hidden="true"></i></span>'
+                            + '</div>'
+                        );
+                    }
+
+                }
+            })
+
+        }
+    }
+    if (user2 != "") {
+        allperson2();
+        function allperson2() {
+            $.ajax('/home/peopleall?groupId='+'@Model.gropId').done(function (ddd) {
+                $(".side-box2").html('');
+                for (var i = 0; i <= ddd.length; i++) {
+                    if(ddd[i].ip="")
+                    {
+                        $(".side-box2").append(
+                            '<div class="mes-pro2" onClick="show(\'' + ddd[i].username + '\')">'
+                            + '<img class="mes-pic2" src="/picture/profile/' + ddd[i].picturename + '"/>'
+                            + '<p class="mes-name3">' + ddd[i].username + '</p>'
+                            + '<span onClick="delperson(\'' + ddd[i].username + '\')" class="mes-name3">&nbsp&nbsp<i class="fa fa-trash text-danger" aria-hidden="true"></i></span>'
+                            + '</div>'
+                        );
+                    }
+                else{
+                        $(".side-box2").append(
+                            '<div class="mes-pro2" onClick="show(\'' + ddd[i].username + '\')">'
+                            + '<img class="mes-pic4" src="/picture/profile/' + ddd[i].picturename + '"/>'
+                            + '<p class="mes-name3">' + ddd[i].username + '</p>'
+                            + '<span onClick="delperson(\'' + ddd[i].username + '\')" class="mes-name3">&nbsp&nbsp<i class="fa fa-trash text-danger" aria-hidden="true"></i></span>'
+                            + '</div>'
+                        );
+                }
+                }
+            })
+
+        }
+    }
+    function delperson(user) {
+        $.ajax('/home/delperson?user=' + user).done();
+        allperson();
+
+    }
+    if (user2 != "") {
+        $(".side-box2").html('');
+        $.ajax('/home/persons?username=' + user).done(function (ddd) {
+            //for (var i = 0; i <= ddd.length; i++) {
+            //    $(".side-box2").append(
+            //            '<div class="mes-pro2" onClick="show(\'' + ddd[i].username + '\')">'
+            //        + '<img class="mes-pic2" src="/picture/profile/' + ddd[i].picturename + '"/>'
+            //            + '<p class="mes-name3">' + ddd[i].username + '</p>'
+            //            + '<span onClick="delperson(\'' + ddd[i].username + '\')" class="mes-name2">&nbsp&nbsp<i class="fa fa-trash text-danger" aria-hidden="true"></i></span>'
+            //            + '</div>'
+            //    );
+            //}
+        })
+        allperson2();
+
+    }
+    //    function showperson()
+    //{
+    //    if(user==null)
+    //    {
+    //     $(".side-box2").html('');
+    //     //setInterval(function () {
+    //     $.ajax('/home/persons?username=' + user).done(function (ddd) {
+    //         for (var i = 0; i <= ddd.length; i++) {
+    //             $(".side-box2").append(
+    //                 '<div class="mes-pro2" onClick="show(\'' + ddd[i].username + '\')">'
+    //                 + '<img class="mes-pic2" src="/picture/profile/' + ddd[i].picturename + '"/>'
+    //                 + '<p class="mes-name3">' + ddd[i].username + '&nbsp<span class="badge badge-info">' + ddd[i].count + '</span></p>'
+    //                 + '</div>'
+    //             );
+    //         }
+    //     })
+    //   }
+    //}
+    //function showperson()
+    //{
+    //     $(".side-box2").html('');
+    //     //setInterval(function () {
+    //     $.ajax('/home/persons?username=' + user).done(function (ddd) {
+    //         for (var i = 0; i <= ddd.length; i++) {
+    //             $(".side-box2").append(
+    //                 '<div class="mes-pro2" onClick="show(\'' + ddd[i].username + '\')">'
+    //                 + '<img class="mes-pic2" src="/picture/profile/' + ddd[i].picturename + '"/>'
+    //                 + '<p class="mes-name3">' + ddd[i].username + '&nbsp<span class="badge badge-info">' + ddd[i].count + '</span></p>'
+    //                 + '</div>'
+    //             );
+    //         }
+    //     })
+    //}
+
+
+    //function counter(user2) {
+    //    var u2 = $("#xTextBox").val();
+    //    $.ajax('/home/counter?username=' + u2).done(function (dd) {
+    //        for (var i = 0; i <= dd.length; i++) {
+    //            c = dd[i].count;
+    //        }
+    //        $(".inbox").text(c);
+    //    })
+    //}
+</script>
+
+@section Scripts{
+    <script>
+
+
+
+        $(".profile-li").css({ 'background': '#bd9119', 'color': 'white' });
+        $(".inboxmenu").css({ 'background': 'white', 'border': '2px solid #0751a1', 'color': '#0751a1', 'padding': '5px 8px 1px 5px' });
+        $(".inboxmenu2").css({ 'background': 'white', 'color': '#0751a1' });
+
+    </script>
+
+
+    @*<script src="~/lib/jquery/dist/jquery.js"></script>
+		 <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+   <script src="~/js/all.js"></script>
+    <script src="~/js/fontawesome.js"></script>*@
+    <script src="~/js/recorder.js"></script>
+    <script src="~/js/app.js"></script>
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+
+    <script src="~/js/chat2.js"></script>
+}

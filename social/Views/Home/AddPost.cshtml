@@ -1,0 +1,68 @@
+﻿@model social.Models.Entity.PostM
+@{
+    ViewData["Title"] = "AddPost";
+    Layout = "~/Views/Shared/_Layoutpro.cshtml";
+}
+
+<div class="div-search">
+    <labe class="text-search2">افزودن پست</labe>
+</div>
+<style>
+ 
+</style> 
+<form asp-action="addpost" asp-controller="home" method="post" enctype="multipart/form-data">
+<div>
+   
+    <div class="div-up-img">
+      
+            <img class="post-pic" id="post-pic" src="~/picture/post/up-post-img.png" />
+            <label class="lbl-post">
+               اپلود عکس یا فیلم
+                <input accept="video/*,image/*" onchange="loadFile2(event)" name="postimg" type="file" id="postimg" class="postimg" style="visibility:hidden" />
+
+            </label>
+       
+        <div class="div-btn">
+                @*<input type="button" value="افزودن متن" class="btn-s-text" />*@
+
+            <input type="submit" value="ایجاد پست" class="btn-s-img"/>
+
+        </div>
+      
+    </div>
+    <div class="div-up-text">
+            <textarea class="text-post" asp-for="textAll" placeholder="متن را وارد کنید"></textarea>
+
+        @*<div class="div-btn-post">
+            <input type="button" value=" مرحله عکس " class="btn-s-img" />
+                <input type="submit" value="ایجاد پست" class="btn-s-text" />
+
+        </div>*@
+    </div>
+</div>
+</form>
+<script>
+    var loadFile2 = function (event) {
+        var output = document.getElementById('post-pic');
+        output.src = URL.createObjectURL(event.target.files[0]);
+        output.onload = function () {
+            URL.revokeObjectURL(output.src) // free memory
+        }
+    };
+    //$("document").ready(function(){
+    //    $(".div-up-text").hide();
+
+    //})
+    //$(".btn-s-text").click(function(){
+    //    $(".div-up-img").hide();
+    //    $(".div-up-text").show();
+
+    //})
+    //$(".btn-s-img").click(function () {
+    //    $(".div-up-img").show();
+    //    $(".div-up-text").hide();
+
+    //})
+    /////////////////////////////progressbar
+       
+</script>

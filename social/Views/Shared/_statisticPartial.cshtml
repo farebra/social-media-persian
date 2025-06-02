@@ -1,0 +1,39 @@
+﻿
+@using Microsoft.AspNetCore.Http
+@using social.Models.Entity
+@using social.Utilities
+@inject IHttpContextAccessor http
+@inject social.Models.Contextsocial db
+
+@{ 
+    string remoteipaddress = http.HttpContext.Connection.RemoteIpAddress.ToString();
+    string todaydate = DateTime.Now.ToShamsi();
+    var query = db.VisitorHits.Where(d => d.IpAddress.Equals(remoteipaddress) && d.DateTime.Equals(todaydate));
+    if (query.Count() == 0)
+    {
+        VisitorHits hv = new VisitorHits();
+        hv.IpAddress = remoteipaddress;
+        hv.DateTime = todaydate;
+        hv.VisitHit = 1;
+        db.VisitorHits.Add(hv);
+        db.SaveChanges();
+    }
+    else
+    {
+
+        var result = (from v in db.VisitorHits
+                      where v.IpAddress.Equals(remoteipaddress) && v.DateTime.Equals(todaydate)
+                      select v);
+        var current = result.FirstOrDefault();
+
+        if (result.Count() != 0)
+        {
+            current.VisitHit++;
+
+
+            db.VisitorHits.Update(current);
+
+            db.SaveChanges();
+        }
+    }
+}

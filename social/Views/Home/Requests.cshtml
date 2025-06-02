@@ -1,0 +1,69 @@
+﻿
+@{
+    ViewData["Title"] = "Requests";
+    Layout = "~/Views/Shared/_Layoutpro.cshtml";
+}
+
+<div class="div-search2">
+    <labe class="text-search" >درخواست ها</labe>
+</div>
+
+<div class="search-div-main">
+    
+    
+
+   
+
+</div>
+@section Scripts{
+    <script>
+        rq();
+        function rq(){
+            $.ajax('/home/requestjson')
+                .done(function(d){
+                    for(var i = 0; i<= d.length; i++)
+        {
+                        $(".search-div-main").append(
+                            '<div class="search-div">'
+                            + '<img class="search-pic rounded-circle" src ="/picture/profile/' + d[i].picture + '" alt = "عکس پروفایل" />'
+                + '<p class="search-name" >' + d[i].username + '</p>'
+                + '<a class= "search-p-r-no" onclick="requestno(\'' + d[i].username + '\')"> حذف </a>'
+                + '<a class= "search-p-r-ok" onclick="requestok(\'' + d[i].username + '\')" > پیوند </a>'
+            )
+        }
+            })
+            }
+                              
+        function requestno(user) {
+            $.ajax('/home/nofollower2?username=' + user).done(function (d) {
+                  if(d.state=="true")
+                {
+                   	var url = "https://iranlo.ir/home/requests";
+		$(location).attr('href', url);
+
+                }
+            });
+
+        }
+        function requestok(user) {
+            $.ajax('/home/addlinks2?username=' + user).done(function(dd){
+                if(dd.state=="true")
+                {
+                    $.ajax('/home/nofollower2?username=' + user).done(function(f){
+                        if (f.state == "true") {
+                            var url = "https://iranlo.ir/home/requests";
+                            $(location).attr('href', url);}
+                    });
+                    
+                }
+            });
+
+        }
+    </script>
+    <script>
+        $(".linkmenu").css({ 'background': 'white', 'border': '2px solid #0751a1', 'color': '#0751a1', 'padding': '5px 8px 1px 5px' });
+        $(".profile-li").css({ 'background': '#bd9119', 'color': 'white' });
+
+    </script>
+
+}

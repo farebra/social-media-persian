@@ -1,0 +1,252 @@
+﻿@inject social.Models.Contextsocial db
+@using social.Models.ViewModel
+
+@{
+    ViewData["Title"] = "تماس تصویری با لینک";
+    Layout = "~/Views/Shared/_Layoutpro2.cshtml";
+
+}
+
+<div class="div-search">
+    <lable class="text-search">تماس تصویری سریع</lable>
+</div>
+
+<div class="callmain">
+    <div class="calldhl">
+        <p class="makeplp">ساخت لینک تماس تصویری</p>
+        <button onclick="linkpeer()" class="btn-lin btn btn-xs btn-sm btn-warning" type="button">ایجاد لینک</button>
+    </div>
+    <div class="callinfo">
+        <p class="infocl">در نظر داشته باشید پس از دریافت لینک قبل از تماس تصویری , لینک را همراه با کد کپی و برای شخص مورد نظر ارسال کنید</p>
+    </div>
+    <div class="dlin">
+        <p class="tlincall">کد تماس</p>
+        <button id="FailCopy" type="button" onclick="copyToClipboard('p.linmaster0')" class="btn btn-xs btn-info">کپی</button>
+    </div>
+    <div class="dlin2">
+        <p class="tlincall">لبنک سایت</p>
+        <button id="FailCopy2" type="button" onclick="copyToClipboard2('p.linmaster')" class="btn btn-xs btn-info">کپی</button>
+
+    </div>
+    <input type="text" class="txtcall" placeholder="کد را وارد کنید" />
+    <button onclick="callUser()" class="btn-sm btn btn-xs btn-success btn-lincall">تماس تصویری</button>
+</div>
+
+<div id="live">
+    <video id="remote-video"></video>
+    <video id="local-video" muted="true"></video>
+    <p id="end-call" onclick="endcall()">قطع تماس</p>
+</div>
+
+
+<script>
+
+
+    //////////////////////////////////////////////////////////peeerjs
+  
+    let peer = new Peer();
+     
+    
+
+    var currentCall;
+    var cv = 1;
+    let conn;
+    function linkpeer() {
+    cv=cv+1;
+        if (cv % 2 == 0) {
+
+            peer.on("open", function (id) {
+                 conn = peer.connect(id);
+                console.log(id);
+                $(".dlin").append(
+                    '<p class="linmaster0">' + id + '</p>'
+                );
+                $(".dlin2").append(
+                    '<p class="linmaster">www.iranlo.ir/guest/fastcamera</p>'
+                );
+
+
+            });
+        }
+         if(cv % 2 != 0) {
+            peer.on('close', () => {
+            
+                alert();
+                // بستن اتصال
+                conn.close();
+                $(".dlin").append('');
+                $(".dlin2").append('');
+            })
+        }
+    }
+    function copyToClipboard(element) {
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val($(element).text()).select();
+        document.execCommand("copy");
+        $temp.remove();
+    }
+
+    $("#FailCopy").click(function () {
+        $("#FailCopy").style.background = "green";
+    });
+    function copyToClipboard2(element) {
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val($(element).text()).select();
+        document.execCommand("copy");
+        $temp.remove();
+    }
+
+    $("#FailCopy2").click(function () {
+        $("#FailCopy2").style.background = "green";
+    });
+
+    $(".end-btn").hide();
+
+    function endcall() {
+        $(".end-btn").hide();
+        //$(".phone-btn").show();
+        $(".camera-btn").show();
+
+
+
+        // Go back to the menu
+
+        document.querySelector("#live").style.display = "none";// If there is no current call, return
+
+        currentCall.close();
+
+        currentCall = undefined;
+    }
+
+
+
+    //////////////////////////////////////////////////////////////
+
+    async function callUser() {
+        var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+        var ply = document.getElementById('svideo');
+
+        $(".end-btn").show();
+        //$(".phone-btn").hide();
+
+        $(".callmain").hide();
+
+        $("#end-call").show();
+
+        const peerId = document.getElementsByClassName("txtcall").value;
+        const stream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: true,
+        });
+
+        document.getElementById("live").style.display = "block";
+        document.getElementById("local-video").srcObject = stream;
+        document.getElementById("local-video").play();// make the call
+        const call = peer.call(peerId, stream);
+        call.on("stream", (stream) => {
+
+            document.getElementById("remote-video").srcObject = stream;
+            document.getElementById("remote-video").play();
+        });
+        call.on("data", (stream) => {
+            document.getElementById("#remote-video").srcObject = stream;
+        });
+        call.on("error", (err) => {
+            console.log(err);
+        });
+        call.on('close', () => {
+            endCall()
+        })// save the close function
+        currentCall = call;
+        //}
+
+    }
+
+
+    /////////////////////////////////////////////////
+
+
+
+    var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+    peer.on('call', function (call) {
+
+        getUserMedia({ video: true, audio: true }, function (stream) {
+            console.log('Received stream1', stream);
+
+            call.answer(stream); // Answer the call with an A/V stream.
+            document.querySelector("#live").style.display = "block";
+            call.on('stream', function (remoteStream) {
+
+                // Show stream in some video/canvas element.
+                console.log('Received stream2', remoteStream);
+                const video = document.getElementById("remote-video");
+                video.srcObject = remoteStream;
+                video.onloadedmetadata = () => {
+                    video.play();
+                };
+            });
+        })
+    }, function (err) {
+        console.log('Failed to get local stream', err);
+
+    });
+
+
+    ///////////////////////////////////////////
+    function endcall() {
+        $(".end-btn").hide();
+        //$(".phone-btn").show();
+        $(".callmain").show();
+
+
+        // Go back to the menu
+        document.querySelector("#live").style.display = "none";// If there is no current call, return
+
+        currentCall.close();
+
+        currentCall = undefined;
+    }
+
+    //////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////
+
+
+
+
+
+
+    $(".profile-li").css({ 'background': '#bd9119', 'color': 'white' });
+    $(".inboxmenu").css({ 'background': 'white', 'border': '2px solid #0751a1', 'color': '#0751a1', 'padding': '5px 8px 1px 5px' });
+    $(".inboxmenu2").css({ 'background': 'white', 'color': '#0751a1' });
+    //#0751a1
+</script>
+
+@section Scripts{
+    <script>
+
+
+
+        $(".profile-li").css({ 'background': '#bd9119', 'color': 'white' });
+        $(".inboxmenu").css({ 'background': 'white', 'border': '2px solid #0751a1', 'color': '#0751a1', 'padding': '5px 8px 1px 5px' });
+        $(".inboxmenu2").css({ 'background': 'white', 'color': '#0751a1' });
+                                        //#0751a1
+    </script>
+
+
+  <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+  
+
+
+    <link href="~/css/all.css" rel="stylesheet" />
+    <link href="~/css/fontawesome.css" rel="stylesheet" />
+
+    <script src="~/js/all.js"></script>
+    <script src="~/js/fontawesome.js"></script>
+
+
+
+
+}
