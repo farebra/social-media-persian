@@ -137,13 +137,13 @@ namespace social.Controllers
 
                 var email = new MimeMessage();
 
-                email.From.Add(new MailboxAddress("iranlo.ir", "support@iranlo.ir"));
+                email.From.Add(new MailboxAddress("azhamerang.ir", "support@azhamerang.ir"));
                 email.To.Add(new MailboxAddress("Receiver Name", account.email));
 
                 email.Subject = "کد احرازهویت";
                 email.Body = new TextPart(MimeKit.Text.TextFormat.Html)
                 {
-                    Text = "<h1>ثبت نام در شبکه اجتماعی ایرانلو</h1><br/><h4>کد شما :</h4><br/><h4>" + rand.ToString() + "</h4>"
+                    Text = "<h1>ثبت نام در شبکه اجتماعی از همه رنگ</h1><br/><h4>کد شما :</h4><br/><h4>" + rand.ToString() + "</h4>"
                 };
 
                 using (var smtp = new MailKit.Net.Smtp.SmtpClient())
@@ -151,7 +151,7 @@ namespace social.Controllers
                     smtp.Connect("mani.r1host.com", 465, true);
 
                     // Note: only needed if the SMTP server requires authentication
-                    smtp.Authenticate("support@iranlo.ir", "4buBh48@1");
+                    smtp.Authenticate("support@azhamerang.ir", "4buBh48@1");
 
                     smtp.Send(email);
                     smtp.Disconnect(true);

@@ -17,7 +17,6 @@ using social.Utilities;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Owin.Cors;
 
 namespace social
 {
@@ -107,18 +106,13 @@ namespace social
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseSignalR(route =>
-            {
-                route.MapHub<ChatHub>("/chatHub");
-                route.MapHub<ChatHub2>("/chatHub2");
-                route.MapHub<ChatHub3>("/chatHub3");
-                route.MapHub<ChatHub4>("/chatHub4");
-
-
-            });
+       
             app.UseEndpoints(endpoints =>
             {
-               
+                endpoints.MapHub<ChatHub>("/chatHub");
+                endpoints.MapHub<ChatHub2>("/chatHub2");
+                endpoints.MapHub<ChatHub3>("/chatHub3");
+                endpoints.MapHub<ChatHub4>("/chatHub4");
                 endpoints.MapControllerRoute(
                      name: "default",
                      pattern: "{controller=Guest}/{action=guestt}/{id?}");

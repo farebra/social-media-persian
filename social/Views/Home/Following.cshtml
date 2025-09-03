@@ -105,7 +105,7 @@
                             }
 
     function postf(user) {
-        var url = "https://iranlo.ir/home/post?user="+user;
+        var url = "https://azhamerang.ir/home/post?user="+user;
         $(location).attr('href', url);
         //$.post('/home/links?username=' + user).done();
     }
@@ -114,7 +114,7 @@
         $.ajax('home/nofollower?username=' + user+'&state=following').done(function (d) {
             if(d.state="true")
             {
-  var url = "https://iranlo.ir/home/following";
+  var url = "https://azhamerang.ir/home/following";
             $(location).attr('href', url);
             }
           

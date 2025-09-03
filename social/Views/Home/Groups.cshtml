@@ -106,7 +106,7 @@ else if (ViewBag.not=="true")
         $.post('/home/exitgroup?group=' + group).done(function (d) {
 
             if (d.state = "true") {
-                var url = "https://iranlo.ir/home/groups";
+                var url = "https://azhamerang.ir/home/groups";
                 $(location).attr('href', url)
             }
 
@@ -116,7 +116,7 @@ else if (ViewBag.not=="true")
         $.post('/home/delgroup?username=' + user).done(function (d) {
 
             if (d.state = "true") {
-                var url = "https://iranlo.ir/home/mygroup";
+                var url = "https://azhamerang.ir/home/mygroup";
                 $(location).attr('href', url)
             }
 

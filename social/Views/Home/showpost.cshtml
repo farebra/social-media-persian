@@ -121,7 +121,7 @@
         $.ajax('/home/trashpost?postid=' + pi).done(function (d) {
 
             if (d.state == "true") {
-                var url = "https://iranlo.ir/home/profile";
+                var url = "https://azhamerang.ir/home/profile";
                 $(location).attr('href', url)
             }
         });
@@ -161,7 +161,7 @@
         document.getElementById("myModal").style.display = "none";
     }
     function postf(user) {
-        var url = "https://iranlo.ir/home/post?user=" + user;
+        var url = "https://azhamerang.ir/home/post?user=" + user;
         $(location).attr('href', url);
         //$.post('/home/links?username=' + user).done();
     }

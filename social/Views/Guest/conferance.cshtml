@@ -152,7 +152,7 @@
                 '<p class="linmaster0">' + id + '</p>'
             );
             $(".dlin2").append(
-                '<p class="linmaster">www.iranlo.ir/guest/conferance?idc='+id+'</p>'
+                '<p class="linmaster">www.azhamerang.ir/guest/conferance?idc='+id+'</p>'
             );
 
             $.ajax('/guest/buscon/?uid=' +'@User.Identity.Name'+'&idc=' + id).done();
@@ -252,7 +252,7 @@
     }
     function show(user)
     {
-            var url = "https://iranlo.ir/home/profile?username=" + user;
+            var url = "https://azhamerang.ir/home/profile?username=" + user;
             $(location).attr('href', url);
             //$.post('/home/links?username=' + user).done();
     }

@@ -152,14 +152,14 @@
         $.ajax('/home/nofollower?username=' + user+'&state=follower').done(function (d) {
 
             if(d.state = "true") {
-                var url = "https://iranlo.ir/home/profile";
+                var url = "https://azhamerang.ir/home/profile";
                 $(location).attr('href', url)
             }
         });
         ;
     }
     function postf(user) {
-        var url = "https://iranlo.ir/home/post?user=" + user;
+        var url = "https://azhamerang.ir/home/post?user=" + user;
         $(location).attr('href', url);
         //$.post('/home/links?username=' + user).done();
     }
